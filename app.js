@@ -92,7 +92,7 @@ const projects = [
 	  description: "Herramienta web interactiva que permite obtener y visualizar métricas de PageSpeed Insights.",
 	  stack: ["CSS", "HTML", "JavaScript"],
 	  category: ["html", "css", "javascript"],
-	  demo: "#",
+	  demo: "https://ddevjourney.github.io/Analytics/",
 	  code: "https://github.com/DDevjourney/Analytics",
 	  image: "img/analizar.png"
 	},
@@ -101,7 +101,7 @@ const projects = [
 	  description: "Un sencillo juego RPG basado en navegador construido con JavaScript.",
 	  stack: ["CSS", "HTML", "JavaScript"],
 	  category: ["html", "css", "javascript"],
-	  demo: "#",
+	  demo: "https://ddevjourney.github.io/Dragon-Repeller/",
 	  code: "https://github.com/DDevjourney/Dragon-Repeller",
 	  image: "img/dragon.png"
 	}
