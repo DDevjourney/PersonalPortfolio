@@ -60,54 +60,61 @@ if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 // Projects data and rendering
 const projects = [
 	{
-		title: "Interactive Pricing Component",
-		description: "Accessible slider with dynamic pricing tiers and responsive layout.",
-		stack: ["HTML", "CSS", "JavaScript"],
-		category: ["html", "css", "javascript"],
-		demo: "#",
-		code: "#"
+	  title: "Portafolio personal",
+	  description: "Personal portfolio realizado con HTML, CSS y JavaScript.",
+	  stack: ["HTML", "CSS", "JavaScript"],
+	  category: ["html", "css", "javascript"],
+	  demo: "https://carlosdsp.es",
+	  code: "https://github.com/DDevjourney/portfolio",
+	  image: "images/portfolio.jpg"
 	},
 	{
-		title: "CSS Grid Gallery",
-		description: "Masonry-like, responsive image gallery powered by modern CSS Grid.",
-		stack: ["HTML", "CSS"],
-		category: ["html", "css"],
-		demo: "#",
-		code: "#"
+	  title: "Juego de adivinar el número",
+	  description: "Juego simple de adivinar el número hecho con HTML & JavaScript.",
+	  stack: ["JavaScript", "HTML"],
+	  category: ["html", "css", "javascript"],
+	  demo: "#",
+	  code: "https://github.com/DDevjourney/learning/tree/main/Guessing%20Game",
+	  image: "images/guess.jpg"
 	},
 	{
-		title: "Vanilla JS Todo App",
-		description: "Stateful list with filtering, persistence, keyboard navigation, and a11y.",
-		stack: ["JavaScript", "HTML", "CSS"],
-		category: ["javascript"],
-		demo: "#",
-		code: "#"
+	  title: "Temporizador",
+	  description: "Temporizador que hace una cuenta atrás hasta la fecha que elijas.",
+	  stack: ["HTML", "CSS", "JavaScript"],
+	  category: ["html", "css", "javascript"],
+	  demo: "#",
+	  code: "https://github.com/DDevjourney/learning/tree/main/Timer-App",
+	  image: "images/timer.jpg"
 	},
 	{
-		title: "Responsive Navbar Patterns",
-		description: "Collection of mobile-first navigation patterns with ARIA behaviors.",
-		stack: ["HTML", "CSS", "JavaScript"],
-		category: ["html", "css", "javascript"],
-		demo: "#",
-		code: "#"
+	  title: "Lista de tareas",
+	  description: "Lista de tareas simple hecha con HTML, CSS y JavaScript.",
+	  stack: ["CSS", "HTML"],
+	  category: ["html", "css", "javascript"],
+	  demo: "#",
+	  code: "https://github.com/DDevjourney/learning/tree/main/To-Do-List",
+	  image: "images/todo.jpg"
 	},
 	{
-		title: "Form Validation Showcase",
-		description: "Progressive enhancement patterns for client-side validation and UX.",
-		stack: ["HTML", "CSS", "JavaScript"],
-		category: ["javascript"],
-		demo: "#",
-		code: "#"
+	  title: "PageSpeed Insights Visualizer",
+	  description: "Herramienta web interactiva que permite obtener y visualizar métricas de PageSpeed Insights.",
+	  stack: ["CSS", "HTML", "JavaScript"],
+	  category: ["html", "css", "javascript"],
+	  demo: "#",
+	  code: "https://github.com/DDevjourney/Analytics",
+	  image: "images/pagespeed.jpg"
 	},
 	{
-		title: "Skeleton Loading UI",
-		description: "Shimmering skeletons and content placeholders with CSS animations.",
-		stack: ["CSS", "HTML"],
-		category: ["css"],
-		demo: "#",
-		code: "#"
+	  title: "Dragon Repeller",
+	  description: "Un sencillo juego RPG basado en navegador construido con JavaScript.",
+	  stack: ["CSS", "HTML", "JavaScript"],
+	  category: ["html", "css", "javascript"],
+	  demo: "#",
+	  code: "https://github.com/DDevjourney/Dragon-Repeller",
+	  image: "images/dragon.jpg"
 	}
-];
+  ];
+  
 
 const grid = document.getElementById("projects-grid");
 function renderProjects(filter = "all") {
@@ -118,17 +125,19 @@ function renderProjects(filter = "all") {
 		const card = document.createElement("article");
 		card.className = "project-card";
 		card.innerHTML = `
-			<div class="project-cover">${p.title.slice(0, 1)}</div>
-			<div class="project-body">
-				<h3 class="project-title">${p.title}</h3>
-				<p class="project-desc">${p.description}</p>
-				<div class="project-tags">${p.stack.map(s => `<span class="tag">${s}</span>`).join("")}</div>
-				<div class="project-links">
-					<a class="btn btn-ghost" href="${p.demo}" target="_blank" rel="noopener noreferrer">Live</a>
-					<a class="btn btn-ghost" href="${p.code}" target="_blank" rel="noopener noreferrer">Code</a>
-				</div>
-			</div>
-		`.trim();
+		<div class="project-cover">
+		  <img src="${p.image}" alt="${p.title}">
+		</div>
+		<div class="project-body">
+		  <h3 class="project-title">${p.title}</h3>
+		  <p class="project-desc">${p.description}</p>
+		  <div class="project-tags">${p.stack.map(s => `<span class="tag">${s}</span>`).join("")}</div>
+		  <div class="project-links">
+			<a class="btn btn-ghost" href="${p.demo}" target="_blank" rel="noopener noreferrer">Live</a>
+			<a class="btn btn-ghost" href="${p.code}" target="_blank" rel="noopener noreferrer">Code</a>
+		  </div>
+		</div>
+	  `.trim();
 		grid.appendChild(card);
 	}
 }
