@@ -226,8 +226,8 @@ img { max-width: 100%; display: block; }
 .avatar {
 	display: grid;
 	place-items: center;
-	width: 120px;
-	height: 120px;
+	width: 350px;
+	height: 350px;
 	border-radius: 20px;
 	background: linear-gradient(135deg, var(--primary), var(--primary-700));
 	font-weight: 800;
