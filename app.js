@@ -65,7 +65,7 @@ const projects = [
 	  description: "Juego simple de adivinar el número hecho con HTML & JavaScript.",
 	  stack: ["JavaScript", "HTML"],
 	  category: ["html", "css", "javascript"],
-	  demo: "#",
+	  demo: "https://ddevjourney.github.io/Guessing-Game/",
 	  code: "https://github.com/DDevjourney/learning/tree/main/Guessing%20Game",
 	  image: "img/juegodeadivinar.png"
 	},
@@ -74,7 +74,7 @@ const projects = [
 	  description: "Temporizador que hace una cuenta atrás hasta la fecha que elijas.",
 	  stack: ["HTML", "CSS", "JavaScript"],
 	  category: ["html", "css", "javascript"],
-	  demo: "#",
+	  demo: "https://ddevjourney.github.io/Timer-App/",
 	  code: "https://github.com/DDevjourney/learning/tree/main/Timer-App",
 	  image: "img/temporizador.png"
 	},
@@ -83,7 +83,7 @@ const projects = [
 	  description: "Lista de tareas simple hecha con HTML, CSS y JavaScript.",
 	  stack: ["CSS", "HTML"],
 	  category: ["html", "css", "javascript"],
-	  demo: "#",
+	  demo: "https://ddevjourney.github.io/To-Do/",
 	  code: "https://github.com/DDevjourney/learning/tree/main/To-Do-List",
 	  image: "img/todolist.png"
 	},
@@ -188,6 +188,7 @@ contactForm?.addEventListener("submit", (e) => {
     }
   );
 });
+
 
 
 
