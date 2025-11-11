@@ -148,29 +148,46 @@ filterButtons.forEach((btn) => {
 // Contact form validation
 const contactForm = document.getElementById("contact-form");
 const formStatus = document.getElementById("form-status");
+
 contactForm?.addEventListener("submit", (e) => {
-	e.preventDefault();
-	if (!contactForm.checkValidity()) {
-		formStatus.textContent = "Please fill out all fields correctly.";
-		formStatus.classList.remove("is-success");
-		formStatus.classList.add("is-error");
-		return;
-	}
-	const data = new FormData(contactForm);
-	const name = String(data.get("name") || "");
-	const email = String(data.get("email") || "");
-	const message = String(data.get("message") || "");
-	const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-	if (!validEmail) {
-		formStatus.textContent = "Please enter a valid email address.";
-		formStatus.classList.remove("is-success");
-		formStatus.classList.add("is-error");
-		return;
-	}
-	formStatus.textContent = "Thanks, " + name + "! Your message has been validated locally.";
-	formStatus.classList.remove("is-error");
-	formStatus.classList.add("is-success");
-	contactForm.reset();
+  e.preventDefault();
+
+  const data = new FormData(contactForm);
+  const name = data.get("name");
+  const email = data.get("email");
+  const message = data.get("message");
+
+  // Validación simple
+  if (!name || !email || !message) {
+    formStatus.textContent = "Por favor, completa todos los campos.";
+    formStatus.className = "is-error";
+    return;
+  }
+
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!validEmail) {
+    formStatus.textContent = "Introduce un email válido.";
+    formStatus.className = "is-error";
+    return;
+  }
+
+  // Enviar email con EmailJS
+  emailjs.send("service_6nms53h", "template_f5kvgwh", {
+    from_name: name,
+    from_email: email,
+    message: message
+  }).then(
+    () => {
+      formStatus.textContent = "¡Mensaje enviado correctamente!";
+      formStatus.className = "is-success";
+      contactForm.reset();
+    },
+    (err) => {
+      formStatus.textContent = "Error al enviar el mensaje: " + err.text;
+      formStatus.className = "is-error";
+    }
+  );
 });
+
 
 
