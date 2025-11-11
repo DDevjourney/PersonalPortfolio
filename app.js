@@ -59,15 +59,7 @@ if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
 // Projects data and rendering
 const projects = [
-	{
-	  title: "Portafolio personal",
-	  description: "Personal portfolio realizado con HTML, CSS y JavaScript.",
-	  stack: ["HTML", "CSS", "JavaScript"],
-	  category: ["html", "css", "javascript"],
-	  demo: "https://carlosdsp.es",
-	  code: "https://github.com/DDevjourney/portfolio",
-	  image: "images/portfolio.jpg"
-	},
+
 	{
 	  title: "Juego de adivinar el número",
 	  description: "Juego simple de adivinar el número hecho con HTML & JavaScript.",
@@ -75,7 +67,7 @@ const projects = [
 	  category: ["html", "css", "javascript"],
 	  demo: "#",
 	  code: "https://github.com/DDevjourney/learning/tree/main/Guessing%20Game",
-	  image: "images/guess.jpg"
+	  image: "img/juegodeadivinar.png"
 	},
 	{
 	  title: "Temporizador",
@@ -84,7 +76,7 @@ const projects = [
 	  category: ["html", "css", "javascript"],
 	  demo: "#",
 	  code: "https://github.com/DDevjourney/learning/tree/main/Timer-App",
-	  image: "images/timer.jpg"
+	  image: "img/temporizador.png"
 	},
 	{
 	  title: "Lista de tareas",
@@ -93,7 +85,7 @@ const projects = [
 	  category: ["html", "css", "javascript"],
 	  demo: "#",
 	  code: "https://github.com/DDevjourney/learning/tree/main/To-Do-List",
-	  image: "images/todo.jpg"
+	  image: "img/todolist.png"
 	},
 	{
 	  title: "PageSpeed Insights Visualizer",
@@ -102,7 +94,7 @@ const projects = [
 	  category: ["html", "css", "javascript"],
 	  demo: "#",
 	  code: "https://github.com/DDevjourney/Analytics",
-	  image: "images/pagespeed.jpg"
+	  image: "img/analizar.png"
 	},
 	{
 	  title: "Dragon Repeller",
@@ -111,7 +103,7 @@ const projects = [
 	  category: ["html", "css", "javascript"],
 	  demo: "#",
 	  code: "https://github.com/DDevjourney/Dragon-Repeller",
-	  image: "images/dragon.jpg"
+	  image: "img/dragon.png"
 	}
   ];
   
