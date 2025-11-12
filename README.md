@@ -1,4 +1,4 @@
-# HTML
+## HTML
 
 Bienvenido a mi portfolio, una demostración práctica de desarrollo web moderno con **HTML, CSS y JavaScript puro**. Este proyecto no solo muestra mi experiencia en la creación de interfaces intuitivas y responsivas, sino también la implementación de conceptos avanzados como la **accesibilidad web y la optimización de rendimiento**.
 
@@ -11,7 +11,7 @@ El portfolio está diseñado con estructura semántica, etiquetas ARIA y técnic
 
 Este repositorio es una representación práctica de mis competencias como desarrollador frontend y mi enfoque en la creación de experiencias web **modernas, accesibles y optimizadas para rendimiento**.
 
---
+
 
 ## Estilo y Diseño
 
@@ -36,7 +36,7 @@ Aspectos destacados del CSS:
 
 Este enfoque demuestra cómo combinar **CSS modular, mantenible y visualmente atractivo** para crear interfaces modernas, responsivas y fáciles de actualizar.
 
---
+
 
 ## Interactividad y Lógica con JavaScript
 
