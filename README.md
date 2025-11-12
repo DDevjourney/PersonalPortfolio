@@ -1,4 +1,4 @@
-## HTML
+# HTML
 
 Bienvenido a mi portfolio, una demostración práctica de desarrollo web moderno con **HTML, CSS y JavaScript puro**. Este proyecto no solo muestra mi experiencia en la creación de interfaces intuitivas y responsivas, sino también la implementación de conceptos avanzados como la **accesibilidad web y la optimización de rendimiento**.
 
@@ -13,7 +13,7 @@ Este repositorio es una representación práctica de mis competencias como desar
 
 
 
-## Estilo y Diseño
+# Estilo y Diseño
 
 El portfolio está construido con **CSS moderno**, utilizando variables globales (`:root`) para gestionar colores, estados y modos de tema (claro/oscuro), lo que facilita la mantenibilidad y consistencia visual en todo el proyecto.  
 
@@ -38,7 +38,7 @@ Este enfoque demuestra cómo combinar **CSS modular, mantenible y visualmente at
 
 
 
-## Interactividad y Lógica con JavaScript
+# Interactividad y Lógica con JavaScript
 
 El portfolio utiliza **JavaScript moderno** para implementar funcionalidades dinámicas y mejorar la experiencia del usuario. Algunos aspectos avanzados incluyen:
 
@@ -66,10 +66,6 @@ Este enfoque demuestra la combinación de **experiencia de usuario, accesibilida
 # Análisis técnico
 
 ## index.html
-
-Aquí tienes un análisis técnico detallado de la parte del HTML que has compartido:
-
----
 
 ### **1. Declaración y estructura básica**
 
@@ -283,6 +279,175 @@ Aquí tienes un análisis técnico detallado de la parte del HTML que has compar
 * Inicializa la librería con tu Public Key, permitiendo el envío de formularios desde JavaScript.
 
 ---
+
+## styles.css
+
+### **1. Variables CSS (`:root`)**
+
+* Definen la paleta de colores y estilos globales para todo el sitio.
+* Variables para modo oscuro:
+
+  * `--bg`, `--bg-elev`: fondos de página y secciones elevadas.
+  * `--text`, `--muted`: colores de texto principal y secundario.
+  * `--primary`, `--primary-700`: colores de acento para botones, marcas y elementos destacados.
+  * `--border`, `--card`, `--chip`: bordes y fondos de tarjetas/chips.
+  * `--success`, `--danger`: colores de estado positivo o negativo.
+  * `--project-cover-bg`, `--glow-color`: estilos de gradientes para proyectos y efectos de glow.
+* Variables para modo claro (`:root.light`) con equivalentes adaptados a esquema claro y accesible.
+
+---
+
+### **2. Globales**
+
+* `* { box-sizing: border-box; }`: Control consistente de tamaño de elementos.
+* `html { scroll-behavior: smooth; }`: Desplazamiento suave.
+* `body`: fuente Inter con fallback seguro, fondo con gradiente radial, color de texto, altura de línea.
+* `img { max-width: 100%; display: block; }`: imágenes responsivas y sin desbordamiento.
+* `.container`: ancho máximo y centrado automático.
+* `p { text-align: justify; }`: párrafos justificados.
+
+---
+
+### **3. Tipografía y secciones**
+
+* `.section`: padding vertical de 80px.
+* `.section.alt`: fondo elevado (`var(--bg-elev)`).
+* Encabezados `.section h2` y `.section-lead` con espaciado y color de texto secundario.
+
+---
+
+### **4. Botones y chips**
+
+* `.btn`, `.btn-primary`, `.btn-ghost`: estilos de botones con transiciones, colores de fondo y hover.
+* `.chip`: estilo de etiquetas de filtro/toggle, con clase `.is-active` para estado seleccionado.
+
+---
+
+### **5. Header y navegación**
+
+* `.site-header`: sticky, fondo semi-transparente con blur, borde inferior.
+* `.header-inner`: flex para distribuir branding y navegación.
+* `.brand` y `.brand-mark`: diseño con gradiente dorado y bordes redondeados.
+* `.nav-list` y `.nav-toggle`: menú responsivo con botón hamburguesa visible en pantallas pequeñas.
+* `.theme-toggle`: botón para cambiar tema claro/oscuro, iconos sol/luna controlados por variables de estado.
+
+---
+
+### **6. Hero**
+
+* `.hero-inner`: grid de 2 columnas (imagen y texto).
+* `.hero-copy`: título responsive (`clamp`), párrafo con máximo ancho y color secundario.
+* `.hero-ctas` y `.socials`: flexbox para botones y redes sociales.
+* `.hero-art` y `.glow`: imagen de fondo combinada con gradientes y efecto de glow.
+
+---
+
+### **7. About y Skills**
+
+* `.two-col`: grid de dos columnas (imagen + texto).
+* `.avatar`: contenedor de imagen redondeada con `object-fit: cover`.
+* `.quick-facts`: lista de hechos rápidos con estilo de checklist.
+* `.skills-grid`: grid de 4 columnas para tarjetas de habilidades.
+* `.skill-card`, `.tags`: diseño de tarjetas con bordes, fondo, padding y tags redondeadas.
+
+---
+
+### **8. Proyectos y Timeline**
+
+* `.projects-grid`: grid de 3 columnas, tarjetas de proyecto `.project-card` con imagen y body.
+* `.project-cover` y `.project-image`: aspecto ratio, fondo de gradiente, `object-fit: cover`.
+* `.project-tags` y `.project-links`: etiquetas y enlaces dentro de cada proyecto.
+* `.timeline` y `.timeline-item`: grid con marcador visual y contenido de experiencia o estudios.
+* `.timeline-marker`: círculo con box-shadow, `.timeline-content`: tarjeta con borde y padding.
+
+---
+
+### **9. Formulario y Contacto**
+
+* `.form-grid`: grid de dos columnas, label y textarea responsivos.
+* Inputs y textarea: bordes redondeados, fondo de tarjeta, color de texto, placeholder estilizado.
+* `.form-actions`: flex para botón y estado del formulario (`#form-status`).
+* Clases `.is-success` y `.is-error` aplican colores de estado.
+
+---
+
+### **10. Footer**
+
+* `.site-footer` y `.footer-inner`: flexbox para distribución, padding y borde superior.
+* `.to-top`: enlace estilizado para volver al inicio, cambio de color en hover.
+
+---
+
+### **11. Media Queries**
+
+* `max-width: 960px`: adapta hero, dos-col, skills-grid, projects-grid y form-grid a 1 o 2 columnas.
+* `max-width: 720px`: activa menú hamburguesa, cambia nav-list a columna, ajusta grids y footer para móvil.
+
+---
+## app.js
+
+### **1. Theme Handling**
+
+* Variables globales y `localStorage` se usan para persistir la preferencia del usuario (`THEME_KEY`).
+* `systemPrefersLight()` permite detectar la preferencia del sistema.
+* `applyTheme(theme)` agrega o quita la clase `light` al `<html>`.
+* `initTheme()` aplica el tema inicial basado en almacenamiento o sistema.
+* Event listener en `#theme-toggle` alterna tema y lo guarda.
+
+---
+
+### **2. Mobile Navigation**
+
+* Toggle del menú con `aria-expanded` y clase `.is-open`.
+* Event listener en `navMenu` cierra menú al clicar en un enlace si la ventana ≤ 720px.
+* Buen uso de accesibilidad (atributos ARIA) y responsividad.
+
+---
+
+### **3. Smooth Scroll**
+
+* Todos los enlaces internos (`a[href^="#"]`) realizan scroll suave y actualizan la URL con `history.pushState`.
+* Evita comportamiento por defecto si el target no existe o es `#`.
+
+---
+
+### **4. Footer Year**
+
+* Dinámico: actualiza `#year` automáticamente con el año actual.
+* Código simple y efectivo.
+
+---
+
+### **5. Projects**
+
+* `projects` es un array de objetos con toda la info.
+* `renderProjects(filter)` filtra por categoría y renderiza cards dinámicamente.
+* Event listeners en filtros `.chip` para cambiar categoría y actualizar estado activo.
+
+---
+
+### **6. Education**
+
+* `educationData` separado por `reglada` y `no-reglada`.
+* `renderEducation(type)` genera timeline dinámico.
+* Filtros toggles `.chip` con actualización de `aria-selected` y estado activo.
+
+---
+
+### **7. Contact Form**
+
+* Validación simple de campos vacíos y email.
+* Envío mediante EmailJS (`send`) y feedback al usuario en `#form-status`.
+* Feedback de éxito (`.is-success`) y error (`.is-error`) con mensajes claros.
+
+---
+
+
+
+
+
+
+
 
 
 
