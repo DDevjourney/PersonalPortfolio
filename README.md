@@ -165,23 +165,14 @@ Aquí tienes un análisis técnico detallado de la parte del HTML que has compar
 
 ---
 
-### **10. Buenas prácticas y recomendaciones**
-
-* Semántica correcta: `<header>`, `<nav>`, `<ul>`, `<li>`.
-* Accesibilidad bien implementada con ARIA y `alt`.
-* El contenedor centraliza y organiza los elementos, facilitando diseño responsive.
-* Podrías añadir comentarios en el HTML para documentar cada bloque si lo incluyes en tu documentación técnica.
-
----
-
-### **11. Estructura general de `<main>`**
+### **10. Estructura general de `<main>`**
 
 * `<main>`: Elemento semántico que indica el contenido principal de la página.
 * Contiene varias secciones (`<section>`) con `id` y `class` para navegación interna y estilos diferenciados.
 
 ---
 
-### **12. Sección Hero (`#home`)**
+### **11. Sección Hero (`#home`)**
 
 * `<section class="hero" id="home">`: Sección principal de presentación inicial.
 * `<div class="hero-copy">`: Contenido textual:
@@ -194,7 +185,7 @@ Aquí tienes un análisis técnico detallado de la parte del HTML que has compar
 
 ---
 
-### **13. Sección Sobre mí (`#about`)**
+### **12. Sección Sobre mí (`#about`)**
 
 * `<div class="container two-col">`: Distribuye contenido en dos columnas: imagen y texto.
 * `<div class="about-media">` y `<div class="avatar">`: Imagen del usuario, marcada como `aria-hidden="true"` ya que no aporta información extra.
@@ -206,7 +197,7 @@ Aquí tienes un análisis técnico detallado de la parte del HTML que has compar
 
 ---
 
-### **14. Sección Habilidades (`#skills`)**
+### **13. Sección Habilidades (`#skills`)**
 
 * `<section id="skills" class="section alt">`: Sección alternativa con estilo diferenciado (`alt`).
 * `<div class="skills-grid">`: Grid para mostrar varias “skill-card” de manera uniforme.
@@ -217,11 +208,7 @@ Aquí tienes un análisis técnico detallado de la parte del HTML que has compar
 
 ---
 
-Aquí tienes un análisis técnico detallado de las secciones `projects`, `experience` y `education` que compartiste:
-
----
-
-### **15. Sección Proyectos (`#projects`)**
+### **14. Sección Proyectos (`#projects`)**
 
 * `<section id="projects" class="section">`: Contenedor semántico para mostrar proyectos.
 * `<p class="section-lead">`: Descripción breve de la sección.
@@ -236,7 +223,7 @@ Aquí tienes un análisis técnico detallado de las secciones `projects`, `exper
 
 ---
 
-### **16. Sección Experiencia (`#experience`)**
+### **15. Sección Experiencia (`#experience`)**
 
 * `<ul class="timeline">`: Lista de experiencias en orden cronológico.
 * `<li class="timeline-item">`: Cada elemento representa un trabajo o proyecto.
@@ -250,7 +237,7 @@ Aquí tienes un análisis técnico detallado de las secciones `projects`, `exper
 
 ---
 
-### **17. Sección Estudios (`#education`)**
+### **16. Sección Estudios (`#education`)**
 
 * `<div class="education-toggle" role="tablist" aria-label="Tipo de formación">`: Botones para alternar entre tipos de formación (reglada y no reglada).
 
@@ -260,7 +247,7 @@ Aquí tienes un análisis técnico detallado de las secciones `projects`, `exper
 
 ---
 
-### **18. Sección Contacto (`#contact`)**
+### **17. Sección Contacto (`#contact`)**
 
 * `<form id="contact-form" novalidate>`: Formulario de contacto con validación controlada por JavaScript (`novalidate` evita la validación HTML nativa).
 * `<div class="form-grid">`: Grid para organizar los campos de entrada.
@@ -274,14 +261,14 @@ Aquí tienes un análisis técnico detallado de las secciones `projects`, `exper
 
 ---
 
-### **19. Footer (`<footer class="site-footer">`)**
+### **18. Footer (`<footer class="site-footer">`)**
 
 * `<p>© <span id="year"></span> ...</p>`: Elemento dinámico que actualiza el año automáticamente mediante JavaScript (`app.js`).
 * `<a href="#home" class="to-top">`: Enlace para volver al inicio de la página, mejorando la navegación.
 
 ---
 
-### **20. Scripts**
+### **19. Scripts**
 
 * `<script src="app.js" defer></script>`: Script principal de la página. `defer` asegura que se ejecute después de cargar el HTML.
 * `<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>`: Librería EmailJS para envío de correos desde el frontend sin backend propio.
