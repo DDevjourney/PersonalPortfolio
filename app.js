@@ -149,42 +149,45 @@ filterButtons.forEach((btn) => {
 const educationData = {
 	reglada: [
 		{
-			title: "Grado Superior en Desarrollo de Aplicaciones Web",
-			meta: "2024 — Presente",
-			description: "Ilerna FP. Especialización en HTML, CSS, JavaScript y Java, aplicando conocimientos en proyectos prácticos orientados al desarrollo web moderno y eficiente."
-		},
-		{
 			title: "Grado en Derecho",
 			meta: "2015 — 2021",
 			description: "Formación universitaria que aportó habilidades analíticas, razonamiento lógico y capacidad para resolver conflictos."
 		},
 		{
-			title: "MOOC (Massive Online Open Course) en Ciberseguridad",
-			meta: "Presente — 2026",
-			description: "Universidad de Málaga. La formación abarca los principales ámbitos de la ciberseguridad, desde los fundamentos hasta las tecnologías más avanzadas. Incluye criptografía aplicada, seguridad en redes, protección de sistemas y programación segura, junto con áreas humanas como la ingeniería social y la privacidad. También aborda temas especializados como seguridad de hardware y sistemas , el análisis de malware, la computación post-cuántica y el diseño de soluciones seguras basadas en blockchain e inteligencia artificial, fomentando una visión integral de la protección digital"
-		},
-		{
 			title: "Inglés",
 			meta: "2022",
 			description: "Universidad de Cambridge. Nivel intermedio-alto reconocido internacionalmente, que acredita competencia sólida en comprensión oral y escrita, expresión fluida en contextos académicos y profesionales, y dominio gramatical avanzado."
+		},
+		{
+			title: "Grado Superior en Desarrollo de Aplicaciones Web",
+			meta: "2024 — Presente",
+			description: "Ilerna FP. Especialización en HTML, CSS, JavaScript y Java, aplicando conocimientos en proyectos prácticos orientados al desarrollo web moderno y eficiente."
+		},
+		
+		{
+			title: "MOOC (Massive Online Open Course) en Ciberseguridad",
+			meta: "Presente — 2026",
+			description: "Universidad de Málaga. La formación abarca los principales ámbitos de la ciberseguridad, desde los fundamentos hasta las tecnologías más avanzadas. Incluye criptografía aplicada, seguridad en redes, protección de sistemas y programación segura, junto con áreas humanas como la ingeniería social y la privacidad. También aborda temas especializados como seguridad de hardware y sistemas , el análisis de malware, la computación post-cuántica y el diseño de soluciones seguras basadas en blockchain e inteligencia artificial, fomentando una visión integral de la protección digital"
 		}
+
 	],
 	"no-reglada": [
+		{
+			title: "Excel en 30 días. De cero a avanzado",
+			meta: "2022",
+			description: "Udemy.Formación en Excel con enfoque en tablas dinámicas y gráficos." /* comentario */
+		},
 		{
 			title: "The Web Developer Bootcamp 2025",
 			meta: "2023",
 			description: "Formación en JavaScript moderno, ES6+ y DOM manipulation. Fue el curso que inició mi camino en el mundo de la programación."
 		},
-		{
-			title: "Excel en 30 días. De cero a avanzado",
-			meta: "2022",
-			description: "Udemy.Formación en Excel con enfoque en tablas dinámicas y gráficos."
-		},
+
 		{
 			title: "Liderazo y gestión de equipos",
 			meta: "2023",
 			description: "Udemy. Formación en comunicación efectiva, asertividad y toma de decisiones."
-		},
+		}
 	]
 };
 
