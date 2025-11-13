@@ -63,7 +63,7 @@ const projects = [
 	{
 	  title: "Juego de adivinar el número",
 	  description: "Juego simple de adivinar el número hecho con HTML & JavaScript.",
-	  stack: ["JavaScript", "HTML"],
+	  stack: ["HTML", "JavaScript"],
 	  category: ["html", "css", "javascript"],
 	  demo: "https://ddevjourney.github.io/Guessing-Game/",
 	  code: "https://github.com/DDevjourney/learning/tree/main/Guessing%20Game",
@@ -81,7 +81,7 @@ const projects = [
 	{
 	  title: "Lista de tareas",
 	  description: "Lista de tareas simple hecha con HTML, CSS y JavaScript.",
-	  stack: ["CSS", "HTML"],
+	  stack: ["HTML", "CSS", "JavaScript"],
 	  category: ["html", "css", "javascript"],
 	  demo: "https://ddevjourney.github.io/To-Do/",
 	  code: "https://github.com/DDevjourney/learning/tree/main/To-Do-List",
@@ -90,7 +90,7 @@ const projects = [
 	{
 	  title: "PageSpeed Insights Visualizer",
 	  description: "Herramienta web interactiva que permite obtener y visualizar métricas de PageSpeed Insights.",
-	  stack: ["CSS", "HTML", "JavaScript"],
+	  stack: ["HTML", "CSS", "JavaScript"],
 	  category: ["html", "css", "javascript"],
 	  demo: "https://ddevjourney.github.io/Analytics/",
 	  code: "https://github.com/DDevjourney/Analytics",
@@ -99,7 +99,7 @@ const projects = [
 	{
 	  title: "Dragon Repeller",
 	  description: "Un sencillo juego RPG basado en navegador construido con JavaScript.",
-	  stack: ["CSS", "HTML", "JavaScript"],
+	  stack: ["HTML", "CSS", "JavaScript"],
 	  category: ["html", "css", "javascript"],
 	  demo: "https://ddevjourney.github.io/Dragon-Repeller/",
 	  code: "https://github.com/DDevjourney/Dragon-Repeller",
