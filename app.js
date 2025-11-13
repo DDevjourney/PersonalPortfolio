@@ -64,7 +64,7 @@ const projects = [
 	  title: "Juego de adivinar el número",
 	  description: "Juego simple de adivinar el número hecho con HTML & JavaScript.",
 	  stack: ["HTML", "JavaScript"],
-	  category: ["html", "css", "javascript"],
+	  category: ["html", "javascript"],
 	  demo: "https://ddevjourney.github.io/Guessing-Game/",
 	  code: "https://github.com/DDevjourney/learning/tree/main/Guessing%20Game",
 	  image: "img/juegodeadivinar.png"
