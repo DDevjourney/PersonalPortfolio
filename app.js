@@ -154,7 +154,7 @@ const educationData = {
 			description: "Formación universitaria que aportó habilidades analíticas, razonamiento lógico y capacidad para resolver conflictos."
 		},
 		{
-			title: "Inglés",
+			title: "Inglés B2",
 			meta: "2022",
 			description: "Universidad de Cambridge. Nivel intermedio-alto reconocido internacionalmente, que acredita competencia sólida en comprensión oral y escrita, expresión fluida en contextos académicos y profesionales, y dominio gramatical avanzado."
 		},
