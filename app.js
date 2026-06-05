@@ -96,15 +96,6 @@ const projects = [
 	  code: "https://github.com/DDevjourney/Analytics",
 	  image: "img/analizar.png"
 	},
-	{
-	  title: "Dragon Repeller",
-	  description: "Un sencillo juego RPG basado en navegador construido con JavaScript.",
-	  stack: ["HTML", "CSS", "JavaScript"],
-	  category: ["html", "css", "javascript"],
-	  demo: "https://ddevjourney.github.io/Dragon-Repeller/",
-	  code: "https://github.com/DDevjourney/Dragon-Repeller",
-	  image: "img/dragon.png"
-	}
   ];
   
 
