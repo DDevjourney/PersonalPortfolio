@@ -20,21 +20,13 @@ export default function Hero() {
 
           {/* Columna derecha (~40%): foto + presentación */}
           <div className="flex flex-col gap-6 lg:w-2/5">
-            {/* Foto circular (placeholder) */}
+            {/* Foto circular de perfil */}
             <div className="flex justify-start lg:justify-end">
-              <div className="flex h-32 w-32 items-center justify-center rounded-full bg-ink/10 text-ink-soft md:h-40 md:w-40">
-                {/* Avatar genérico */}
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="h-16 w-16"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                >
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M4 20c0-4 3.5-7 8-7s8 3 8 7" />
-                </svg>
-              </div>
+              <img
+                src="/perfil.jpg"
+                alt="Carlos, desarrollador web"
+                className="h-32 w-32 rounded-full object-cover md:h-40 md:w-40"
+              />
             </div>
 
             <p className="text-lg font-bold leading-snug text-ink">
