@@ -29,7 +29,7 @@ export const projects: Project[] = [
     title: 'A-Library',
     stack: 'Next.js',
     description:
-      'Herramienta para amantes de los libros: reseñas, estanterías y recomendaciones.',
+      'Herramienta para amantes de los libros: reseñas y listas.',
     url: 'https://a-library-s9bp.onrender.com/login',
   },
 /*  {

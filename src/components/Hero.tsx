@@ -36,8 +36,7 @@ export default function Hero() {
             <hr className="hairline" />
 
             <p className="text-sm leading-relaxed text-ink-soft">
-              Profesional del Desarrollo de Aplicaciones Web con base sólida en PHP,
-              Laravel y bases de datos. Me gusta crear experiencias intuitivas y
+              Profesional del Desarrollo de Aplicaciones Web con base sólida en PHP, JavaScript, Laravel y React. Me gusta crear experiencias intuitivas y
               funcionales para usuarios y negocios.
             </p>
 
