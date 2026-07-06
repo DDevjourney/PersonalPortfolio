@@ -7,7 +7,7 @@ export const skills: Skill[] = [
   { name: 'PHP', category: 'Backend' },
   { name: 'Laravel', category: 'Framework' },
   { name: 'SQL', category: 'Bases de datos' },
-  { name: 'MySQL', category: 'Bases de datos' },
+  { name: 'React', category: 'Frontend' },
   { name: 'JavaScript', category: 'Frontend' },
   { name: 'Docker', category: 'Plataformas' },
 ]
@@ -32,7 +32,7 @@ export const projects: Project[] = [
       'Herramienta para amantes de los libros: reseñas y listas.',
     url: 'https://a-library-s9bp.onrender.com/login',
   },
-/*  {
+/*  { Añadir las landings pages de Bittacora
     id: '03',
     title: 'Landing Semar Cocinas',
     stack: 'PHP',
