@@ -18,14 +18,6 @@ export const skills: Skill[] = [
 export const projects: Project[] = [
   {
     id: '01',
-    title: 'Gestor de Pedidos',
-    stack: 'Laravel',
-    description:
-      'Aplicación de gestión de pedidos con panel de administración, control de stock y reporting.',
-    url: 'https://e-local.onrender.com/', // 
-  },
-  {
-    id: '02',
     title: 'A-Library',
     stack: 'Next.js',
     description:
@@ -33,7 +25,7 @@ export const projects: Project[] = [
     url: 'https://a-library-s9bp.onrender.com/login',
   },
   { 
-    id: '03',
+    id: '02',
     title: 'Cannamtter',
     stack: 'JavaScript, HTML, CSS',
     description:
@@ -41,7 +33,7 @@ export const projects: Project[] = [
     url: 'https://observatorioagroalimentario.com/proyectos/GOS/cannamatter/',
   },
     {
-    id: '04',
+    id: '03',
     title: 'Greendrop',
     stack: 'JavaScript, HTML, CSS',
     description:
