@@ -23,6 +23,11 @@ export default {
       transitionDuration: {
         DEFAULT: '300ms',
       },
+      transitionTimingFunction: {
+        // Expo out: arranca rápido y frena largo. Misma sensación que el
+        // easing de Lenis, para que scroll y cartas se muevan "igual".
+        expo: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      },
     },
   },
   plugins: [],

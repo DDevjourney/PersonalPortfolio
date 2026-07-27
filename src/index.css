@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
+  /* Fallback nativo solo cuando Lenis NO está gobernando el scroll: al
+     inicializarse añade la clase .lenis a <html>, y el smooth nativo pelearía
+     con su animación por frame. Si el sistema pide menos movimiento, Lenis no
+     arranca y aquí tampoco suavizamos. */
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.lenis) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {

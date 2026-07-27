@@ -67,12 +67,19 @@ export default function ExpandableCards({
                 aria-expanded={isActive}
                 className={[
                   'group relative overflow-hidden rounded-2xl border border-ink/20 text-left',
-                  'transition-all duration-500 ease-in-out',
+                  // Solo las propiedades que cambian, con la misma curva que el scroll.
+                  'transition-[flex-grow,background-color,border-color] duration-700 ease-expo',
+                  // El ancho mínimo es igual en los tres estados a propósito: si
+                  // solo lo tuvieran las cartas activa/dimmed, al contraer
+                  // desaparecería de golpe mientras flex-grow sigue en su valor
+                  // inicial y flexbox recalcularía el reparto en un frame (la
+                  // carta abierta pegaba un salto de +133px antes de encogerse).
+                  'md:min-w-[8rem] lg:min-w-[11rem]',
                   // Desktop: control del ancho con flex-grow.
                   isActive
                     ? 'md:flex-[3] bg-ink text-paper'
                     : isDimmed
-                      ? 'md:flex-[0.6] bg-paper text-ink opacity-70 hover:opacity-100'
+                      ? 'md:flex-[0.6] bg-paper-light text-ink hover:bg-ink/5'
                       : 'md:flex-1 bg-paper text-ink hover:bg-ink/5',
                 ].join(' ')}
               >
@@ -80,14 +87,14 @@ export default function ExpandableCards({
                 <div className="flex min-h-[8rem] flex-col justify-between gap-6 p-6 md:min-h-[20rem]">
                   <div className="flex items-start justify-between gap-4">
                     <span
-                      className={`text-xs uppercase tracking-wider transition-colors duration-300 ${
+                      className={`text-xs uppercase tracking-wider transition-colors duration-700 ease-expo ${
                         isActive ? 'text-paper/60' : 'text-ink-soft'
                       }`}
                     >
                       {item.period}
                     </span>
                     <span
-                      className={`flex h-7 w-7 flex-none items-center justify-center rounded-full border text-xs transition-transform duration-300 ${
+                      className={`flex h-7 w-7 flex-none items-center justify-center rounded-full border text-xs transition-all duration-500 ease-expo ${
                         isActive
                           ? 'rotate-45 border-paper/40 text-paper'
                           : 'border-ink/30 text-ink-soft'
@@ -100,32 +107,39 @@ export default function ExpandableCards({
 
                   <div>
                     <h3
-                      className={`font-archivo text-xl font-bold leading-tight transition-colors duration-300 md:text-2xl ${
+                      className={`font-archivo text-xl font-bold leading-tight transition-colors duration-700 ease-expo md:text-2xl ${
                         isActive ? 'text-paper' : 'text-ink'
                       }`}
                     >
                       {item.title}
                     </h3>
                     <p
-                      className={`mt-1 text-sm transition-colors duration-300 ${
+                      className={`mt-1 text-sm transition-colors duration-700 ease-expo ${
                         isActive ? 'text-paper/70' : 'text-ink-soft'
                       }`}
                     >
                       {item.subtitle}
                     </p>
 
-                    {/* Descripción revelada al expandir.
-                        Desktop: fade + ancho extra. Móvil: max-height. */}
+                    {/* Descripción revelada al expandir: el hueco se abre con
+                        grid-rows y el texto entra después, escalonado, para que
+                        no compita con el ensanchado de la carta. */}
                     <div
-                      className={`grid transition-all duration-500 ease-in-out ${
-                        isActive
-                          ? 'mt-4 grid-rows-[1fr] opacity-100'
-                          : 'mt-0 grid-rows-[0fr] opacity-0'
+                      className={`grid transition-[grid-template-rows,margin-top] duration-700 ease-expo ${
+                        isActive ? 'mt-4 grid-rows-[1fr]' : 'mt-0 grid-rows-[0fr]'
                       }`}
                     >
-                      <p className="overflow-hidden text-justify text-sm leading-relaxed text-paper/80">
-                        {item.description}
-                      </p>
+                      <div className="overflow-hidden">
+                        <p
+                          className={`text-justify text-sm leading-relaxed text-paper/80 transition-[opacity,transform] ease-expo ${
+                            isActive
+                              ? 'translate-y-0 opacity-100 delay-200 duration-500'
+                              : 'translate-y-2 opacity-0 delay-0 duration-150'
+                          }`}
+                        >
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

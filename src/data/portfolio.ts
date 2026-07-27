@@ -29,7 +29,7 @@ export const projects: Project[] = [
     title: 'Cannamtter',
     stack: 'JavaScript, HTML, CSS',
     description:
-      'Landing page corporativa a medida con formulario de contacto y galería de proyectos.',
+      'Landing page corporativa sobre productos derivados del cáñamo.',
     url: 'https://observatorioagroalimentario.com/proyectos/GOS/cannamatter/',
   },
     {
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     title: 'Greendrop',
     stack: 'JavaScript, HTML, CSS',
     description:
-      'Landing page corporativa a medida con formulario de contacto y galería de proyectos.',
+      'Landing page corporativa sobre un proyecto de sostenibilidad.',
     url: 'https://observatorioagroalimentario.com/proyectos/GOS/greendrop/',
   }
 ]

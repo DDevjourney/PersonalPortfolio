@@ -7,12 +7,15 @@ import Education from './components/Education'
 import Services from './components/Services'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import useSmoothScroll from './hooks/useSmoothScroll'
 
 /**
  * Estructura general de la landing.
  * El orden de secciones sigue la numeración (001 → 006).
  */
 export default function App() {
+  useSmoothScroll()
+
   return (
     <>
       <Header />
