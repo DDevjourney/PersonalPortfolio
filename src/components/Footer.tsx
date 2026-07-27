@@ -2,7 +2,7 @@
 const socials = [
   { label: 'GitHub', href: 'https://github.com/DDevjourney' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/cdsp/' },
-  { label: 'Email', href: 'mailto:carlosdsp2308@gmaik.com' },
+  { label: 'Email', href: 'mailto:carlosdsp2308@gmail.com' },
 ]
 
 /** Footer sencillo: logo, enlaces a redes y copyright. */

@@ -26,7 +26,7 @@ export const projects: Project[] = [
   },
   { 
     id: '02',
-    title: 'Cannamtter',
+    title: 'Cannamatter',
     stack: 'JavaScript, HTML, CSS',
     description:
       'Landing page corporativa sobre productos derivados del cáñamo.',

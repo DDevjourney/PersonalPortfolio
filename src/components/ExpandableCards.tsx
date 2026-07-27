@@ -74,7 +74,10 @@ export default function ExpandableCards({
                   // desaparecería de golpe mientras flex-grow sigue en su valor
                   // inicial y flexbox recalcularía el reparto en un frame (la
                   // carta abierta pegaba un salto de +133px antes de encogerse).
-                  'md:min-w-[8rem] lg:min-w-[11rem]',
+                  // 12.5rem = 200px: 152px de hueco tras el p-6, suficiente para
+                  // "Ciberseguridad" (148px a 20px en Archivo bold), que es el
+                  // título más largo de todas las secciones.
+                  'md:min-w-[8rem] lg:min-w-[12.5rem]',
                   // Desktop: control del ancho con flex-grow.
                   isActive
                     ? 'md:flex-[3] bg-ink text-paper'
@@ -107,7 +110,7 @@ export default function ExpandableCards({
 
                   <div>
                     <h3
-                      className={`font-archivo text-xl font-bold leading-tight transition-colors duration-700 ease-expo md:text-2xl ${
+                      className={`font-archivo break-words text-xl font-bold leading-tight transition-colors duration-700 ease-expo ${
                         isActive ? 'text-paper' : 'text-ink'
                       }`}
                     >

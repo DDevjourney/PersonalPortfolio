@@ -38,11 +38,6 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Botón pill (desktop) */}
-        <a href="#contacto" className="pill hidden md:inline-flex">
-          Empieza tu proyecto
-        </a>
-
         {/* Botón hamburguesa (móvil) */}
         <button
           type="button"
@@ -86,13 +81,6 @@ export default function Header() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contacto"
-            onClick={() => setMenuOpen(false)}
-            className="pill mt-3 self-start"
-          >
-            Empieza tu proyecto
-          </a>
         </nav>
       </div>
     </header>
