@@ -4,7 +4,7 @@ import type { Skill, Project, Service, ExpandableItem } from './types'
 /* SKILLS — edita libremente esta lista                                */
 /* ------------------------------------------------------------------ */
 export const skills: Skill[] = [
-  { name: 'PHP', category: 'Backend' },
+  { name: 'UX/UI', category: 'Diseño' },
   { name: 'Laravel', category: 'Framework' },
   { name: 'SQL', category: 'Bases de datos' },
   { name: 'React', category: 'Frontend' },
@@ -32,14 +32,22 @@ export const projects: Project[] = [
       'Herramienta para amantes de los libros: reseñas y listas.',
     url: 'https://a-library-s9bp.onrender.com/login',
   },
-/*  { Añadir las landings pages de Bittacora
+  { 
     id: '03',
-    title: 'Landing Semar Cocinas',
-    stack: 'PHP',
+    title: 'Cannamtter',
+    stack: 'JavaScript, HTML, CSS',
     description:
       'Landing page corporativa a medida con formulario de contacto y galería de proyectos.',
-    url: 'https://github.com/DDevjourney',
-  }, */
+    url: 'https://observatorioagroalimentario.com/proyectos/GOS/cannamatter/',
+  },
+    {
+    id: '04',
+    title: 'Greendrop',
+    stack: 'JavaScript, HTML, CSS',
+    description:
+      'Landing page corporativa a medida con formulario de contacto y galería de proyectos.',
+    url: 'https://observatorioagroalimentario.com/proyectos/GOS/greendrop/',
+  }
 ]
 
 /* ------------------------------------------------------------------ */
@@ -60,9 +68,9 @@ export const services: Service[] = [
   },
   {
     id: '003',
-    title: 'GOOGLE BUSINESS',
+    title: 'DISEÑO UX/UI',
     description:
-      'Aparece en Google cuando buscan tu servicio en tu zona. Optimizo tu ficha y tu posicionamiento local.',
+      'Diseño de interfaces y experiencia de usuario para que tus clientes naveguen cómodamente y encuentren lo que buscan.',
   },
 ]
 
