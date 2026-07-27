@@ -13,6 +13,21 @@
     }
   }
 
+  /* Desactivar el hook de useSmoothScroll solo frena Lenis: las transiciones
+     de las cartas (700ms) y todos los hovers seguían corriendo. Esto las
+     reduce a un valor imperceptible en lugar de eliminarlas, para no romper
+     los estados finales que dependen de que la transición termine. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   body {
     @apply bg-paper text-ink font-body antialiased;
   }

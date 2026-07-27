@@ -59,12 +59,11 @@ export default function ExpandableCards({
             const isActive = activeId === item.id
             const isDimmed = activeId !== null && !isActive
 
+            const panelId = `${sectionId}-${item.id}-panel`
+
             return (
-              <button
+              <div
                 key={item.id}
-                type="button"
-                onClick={() => toggle(item.id)}
-                aria-expanded={isActive}
                 className={[
                   'group relative overflow-hidden rounded-2xl border border-ink/20 text-left',
                   // Solo las propiedades que cambian, con la misma curva que el scroll.
@@ -86,6 +85,22 @@ export default function ExpandableCards({
                       : 'md:flex-1 bg-paper text-ink hover:bg-ink/5',
                 ].join(' ')}
               >
+                {/* El disparador es un botón superpuesto que cubre la carta
+                    entera, no un <button> envolviendo todo el contenido. Así
+                    la descripción queda FUERA del botón: si está dentro, pasa
+                    a formar parte de su nombre accesible y un lector de
+                    pantalla recita el párrafo completo al enfocarlo, incluso
+                    con la carta cerrada. El aria-label fija ese nombre y el
+                    aria-controls apunta al panel que despliega. */}
+                <button
+                  type="button"
+                  onClick={() => toggle(item.id)}
+                  aria-expanded={isActive}
+                  aria-controls={panelId}
+                  aria-label={`${item.title}. ${item.subtitle}. ${item.period}`}
+                  className="absolute inset-0 z-10 rounded-2xl"
+                />
+
                 {/* Cara frontal: siempre visible */}
                 <div className="flex min-h-[8rem] flex-col justify-between gap-6 p-6 md:min-h-[20rem]">
                   <div className="flex items-start justify-between gap-4">
@@ -128,7 +143,19 @@ export default function ExpandableCards({
                         grid-rows y el texto entra después, escalonado, para que
                         no compita con el ensanchado de la carta. */}
                     <div
-                      className={`grid transition-[grid-template-rows,margin-top] duration-700 ease-expo ${
+                      id={panelId}
+                      // Colapsada, la descripción sigue en el DOM para poder
+                      // animarla, pero aria-hidden la saca del árbol de
+                      // accesibilidad. Es seguro porque dentro no hay nada
+                      // enfocable: el botón está fuera de este panel.
+                      aria-hidden={!isActive}
+                      // z-20 lo deja por encima del botón superpuesto para que
+                      // el texto se pueda seleccionar con el ratón. Colapsado
+                      // mide 0 de alto, así que no roba clicks. Como efecto
+                      // secundario, hacer click sobre la descripción ya no
+                      // cierra la carta: se cierra desde el resto de la carta
+                      // o pulsando fuera.
+                      className={`relative z-20 grid transition-[grid-template-rows,margin-top] duration-700 ease-expo ${
                         isActive ? 'mt-4 grid-rows-[1fr]' : 'mt-0 grid-rows-[0fr]'
                       }`}
                     >
@@ -146,7 +173,7 @@ export default function ExpandableCards({
                     </div>
                   </div>
                 </div>
-              </button>
+              </div>
             )
           })}
         </div>

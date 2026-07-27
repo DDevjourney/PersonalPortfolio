@@ -26,7 +26,10 @@ export default function Header() {
         </a>
 
         {/* Navegación centrada (desktop) */}
-        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
+        <nav
+          aria-label="Principal"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex"
+        >
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -41,8 +44,9 @@ export default function Header() {
         {/* Botón hamburguesa (móvil) */}
         <button
           type="button"
-          aria-label="Abrir menú"
+          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={menuOpen}
+          aria-controls="menu-movil"
           onClick={() => setMenuOpen((v) => !v)}
           className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
         >
@@ -64,13 +68,19 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Menú móvil desplegable */}
+      {/* Menú móvil desplegable.
+          `invisible` al cerrar no es decorativo: con solo `max-h-0` el menú
+          queda plegado pero sus enlaces siguen recibiendo el foco del teclado,
+          así que se tabulaba dentro de un menú que no se ve. `visibility` los
+          saca del orden de tabulación, y al ir en la transición se aplica al
+          final del plegado (y de inmediato al abrir), sin cortar la animación. */}
       <div
-        className={`overflow-hidden border-t border-ink/10 bg-paper transition-[max-height] duration-300 md:hidden ${
-          menuOpen ? 'max-h-96' : 'max-h-0'
+        id="menu-movil"
+        className={`overflow-hidden border-t border-ink/10 bg-paper transition-[max-height,visibility] duration-300 md:hidden ${
+          menuOpen ? 'visible max-h-96' : 'invisible max-h-0'
         }`}
       >
-        <nav className="container-content flex flex-col gap-1 py-4">
+        <nav aria-label="Principal (móvil)" className="container-content flex flex-col gap-1 py-4">
           {navLinks.map((link) => (
             <a
               key={link.href}

@@ -19,7 +19,7 @@ export default function Footer() {
         </a>
 
         {/* Redes */}
-        <nav className="flex flex-wrap gap-6">
+        <nav aria-label="Redes sociales" className="flex flex-wrap gap-6">
           {socials.map((social) => (
             <a
               key={social.label}

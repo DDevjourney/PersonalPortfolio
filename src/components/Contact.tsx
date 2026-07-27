@@ -21,6 +21,9 @@ const isConfigured = Boolean(EMAILJS.serviceId && EMAILJS.templateId && EMAILJS.
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
+/** id de la región de estado, referenciada por aria-describedby. */
+const ESTADO_ID = 'contacto-estado'
+
 /**
  * Sección Contacto.
  *  - <form> real: se envía con Enter desde cualquier campo.
@@ -31,39 +34,54 @@ export default function Contact() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState<string | null>(null)
+  /** Campos concretos que fallaron, para marcarlos con aria-invalid. */
+  const [invalid, setInvalid] = useState<Partial<Record<keyof FormState, boolean>>>({})
 
   const update = (field: keyof FormState) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }))
+    setInvalid((prev) => ({ ...prev, [field]: false }))
     if (status !== 'sending') {
       setStatus('idle')
       setMessage(null)
     }
   }
 
+  const fail = (
+    msg: string,
+    campos: Partial<Record<keyof FormState, boolean>> = {},
+  ) => {
+    setStatus('error')
+    setMessage(msg)
+    setInvalid(campos)
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (status === 'sending') return
 
-    if (!form.nombre.trim() || !form.email.trim() || !form.mensaje.trim()) {
-      setStatus('error')
-      setMessage('Por favor, completa todos los campos.')
+    const vacios = {
+      nombre: !form.nombre.trim(),
+      email: !form.email.trim(),
+      mensaje: !form.mensaje.trim(),
+    }
+    if (vacios.nombre || vacios.email || vacios.mensaje) {
+      fail('Por favor, completa todos los campos.', vacios)
       return
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setStatus('error')
-      setMessage('Introduce un email válido.')
+      fail('Introduce un email válido.', { email: true })
       return
     }
     if (!isConfigured) {
-      setStatus('error')
-      setMessage('El envío no está configurado. Escríbeme a carlosdsp2308@gmail.com.')
+      fail('El envío no está configurado. Escríbeme a carlosdsp2308@gmail.com.')
       return
     }
 
     setStatus('sending')
     setMessage(null)
+    setInvalid({})
 
     try {
       await emailjs.send(
@@ -93,6 +111,10 @@ export default function Contact() {
 
   const sending = status === 'sending'
 
+  /** Marca el campo como inválido y lo apunta al mensaje de estado. */
+  const a11y = (field: keyof FormState) =>
+    invalid[field] ? { 'aria-invalid': true, 'aria-describedby': ESTADO_ID } : {}
+
   return (
     <section id="contacto" className="py-20 md:py-28">
       <div className="container-content">
@@ -115,6 +137,7 @@ export default function Contact() {
                   disabled={sending}
                   placeholder="Tu nombre"
                   className={inputClass}
+                  {...a11y('nombre')}
                 />
               </div>
 
@@ -132,6 +155,7 @@ export default function Contact() {
                   disabled={sending}
                   placeholder="tu@email.com"
                   className={inputClass}
+                  {...a11y('email')}
                 />
               </div>
             </div>
@@ -149,12 +173,14 @@ export default function Contact() {
                 disabled={sending}
                 placeholder="Cuéntame sobre tu proyecto..."
                 className={`${inputClass} resize-none`}
+                {...a11y('mensaje')}
               />
             </div>
 
             {/* Estado del envío: role="status" para que los lectores de
                 pantalla lo anuncien sin interrumpir lo que estén leyendo. */}
             <p
+              id={ESTADO_ID}
               role="status"
               aria-live="polite"
               className={`text-sm ${status === 'error' ? 'text-red-700' : 'text-ink'}`}

@@ -18,8 +18,19 @@ export default function App() {
 
   return (
     <>
+      {/* Skip link: invisible hasta que recibe el foco, y entonces es lo
+          primero que se tabula. `tabIndex={-1}` en el <main> es necesario para
+          que el salto mueva el foco además del scroll: sin él, el navegador
+          desplaza la página pero el foco se queda en la cabecera. */}
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-4 focus:z-[60] focus:rounded-full focus:border focus:border-ink focus:bg-paper focus:px-5 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
+      >
+        Saltar al contenido
+      </a>
+
       <Header />
-      <main>
+      <main id="contenido" tabIndex={-1} className="focus:outline-none">
         {/* 001 — Hero + Skills */}
         <Hero />
         <Skills />
