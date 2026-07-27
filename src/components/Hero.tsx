@@ -21,12 +21,31 @@ export default function Hero() {
           {/* Columna derecha (~40%): foto + presentación */}
           <div className="flex flex-col gap-6 lg:w-2/5">
             {/* Foto circular de perfil */}
-            <div className="flex justify-start lg:justify-end">
-              <img
-                src="/perfil.jpg"
-                alt="Carlos, desarrollador web"
-                className="h-32 w-32 rounded-full object-cover md:h-40 md:w-40"
-              />
+            <div className="flex justify-start lg:justify-center">
+              {/* El recorte va en el contenedor, no en la <img>: la imagen es
+                  cuadrada igual que el hueco, así que con `object-cover` a
+                  secas se ve entera y encogerla no quita nada de pared, solo
+                  la hace más pequeña. El `scale` de dentro es lo que deja
+                  fuera del círculo la franja lateral: 1.3 recorta un 15% por
+                  cada lado. El origen va arriba y no centrado porque la cabeza
+                  empieza a ~10px del borde superior del archivo: centrado, el
+                  recorte vertical se la cortaba. Anclado arriba, esos 100px
+                  salen todos por abajo, que es camiseta.
+                  El aro marca el borde, que sobre el papel se difuminaba. */}
+              <div className="h-32 w-32 overflow-hidden rounded-full ring-1 ring-ink/15 md:h-40 md:w-40">
+                {/* width/height son los del archivo (432×432): le dan al
+                    navegador la proporción para reservar el hueco antes de
+                    descargarla. Es la imagen del primer viewport, de ahí la
+                    prioridad alta de descarga. */}
+                <img
+                  src="/perfil.jpg"
+                  alt="Carlos, desarrollador web"
+                  width={432}
+                  height={432}
+                  fetchPriority="high"
+                  className="h-full w-full origin-top scale-[1.3] object-cover"
+                />
+              </div>
             </div>
 
             <p className="text-lg font-bold leading-snug text-ink">

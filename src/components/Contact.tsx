@@ -107,7 +107,7 @@ export default function Contact() {
   }
 
   const inputClass =
-    'w-full border-b border-ink/20 bg-transparent py-3 text-base text-ink placeholder:text-ink-faint focus:border-ink focus:outline-none transition-colors duration-300 disabled:opacity-50'
+    'w-full border-b border-ink/20 bg-transparent py-3 text-base text-ink placeholder:text-ink-soft focus:border-ink focus:outline-none transition-colors duration-300 disabled:opacity-50'
 
   const sending = status === 'sending'
 

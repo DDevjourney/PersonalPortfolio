@@ -46,19 +46,20 @@ export default function Services() {
                     {service.id}
                   </span>
 
-                  {/* Título: gris/outline por defecto, negro sólido al hover */}
+                  {/* El hover oscurece, nunca aclara: `ink-faint` sobre papel
+                      queda en 1.69:1 de contraste y el texto desaparecía justo
+                      al apuntarlo. El título ya es negro, así que el énfasis lo
+                      lleva la descripción, que sube de `ink-soft` a `ink`. */}
                   <h3
-                    className={`font-display text-3xl uppercase leading-none transition-colors duration-300 md:col-span-6 md:text-5xl ${
-                      isHovered ? 'text-ink-faint' : 'text-ink'
-                    }`}
+                    className="font-display text-3xl uppercase leading-none text-ink transition-colors duration-300 md:col-span-6 md:text-5xl"
                   >
                     {service.title}
                   </h3>
 
-                  {/* Descripción: se aclara al hover */}
+                  {/* Descripción: se oscurece al hover */}
                   <p
                     className={`text-sm leading-relaxed transition-colors duration-300 md:col-span-5 ${
-                      isHovered ? 'text-ink-faint' : 'text-ink-soft'
+                      isHovered ? 'text-ink' : 'text-ink-soft'
                     }`}
                   >
                     {service.description}

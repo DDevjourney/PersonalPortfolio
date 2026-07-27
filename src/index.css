@@ -28,6 +28,14 @@
     }
   }
 
+  /* El header es fijo (h-20 en desktop), así que un salto a #proyectos deja el
+     título debajo de él. Lenis lo compensa con su `anchors.offset`, pero solo
+     cuando Lenis corre: si el sistema pide menos movimiento no se inicializa y
+     el scroll es el nativo. Esto lo cubre en los dos casos. */
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+
   body {
     @apply bg-paper text-ink font-body antialiased;
   }
