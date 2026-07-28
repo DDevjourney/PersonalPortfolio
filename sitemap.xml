@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  El portfolio es una sola página; las secciones son anclas (#proyectos,
+  #contacto…) y no URLs propias, así que no van en el sitemap.
+  Sin <lastmod> a propósito: un valor fijo se queda obsoleto al primer cambio
+  de contenido y le estaría mintiendo a los rastreadores.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.carlosdsp.es/</loc>
+  </url>
+</urlset>
