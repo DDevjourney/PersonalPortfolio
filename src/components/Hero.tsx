@@ -42,7 +42,15 @@ export default function Hero() {
                   alt="Carlos, desarrollador web"
                   width={432}
                   height={432}
-                  fetchPriority="high"
+                  // En minúsculas y por spread a propósito. React 18 no conoce
+                  // la forma camelCase `fetchPriority` (llega en React 19): la
+                  // descartaba con un aviso en consola y el atributo no acababa
+                  // en el HTML, así que la prioridad de descarga no se aplicaba.
+                  // En minúsculas sí pasa tal cual al DOM, pero los tipos de
+                  // @types/react van por delante del runtime y solo aceptan la
+                  // versión camelCase, de ahí el spread para saltárselos.
+                  // Al subir a React 19: volver a `fetchPriority="high"`.
+                  {...{ fetchpriority: 'high' }}
                   className="h-full w-full origin-top scale-[1.3] object-cover"
                 />
               </div>

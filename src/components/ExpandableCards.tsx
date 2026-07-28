@@ -44,6 +44,18 @@ export default function ExpandableCards({
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  // El click fuera es la salida del ratón; Escape es la del teclado. Sin esto,
+  // quien navega tabulando solo podía cerrar una carta volviendo a ella.
+  // El foco no se mueve: el botón que dispara sigue siendo la propia carta.
+  useEffect(() => {
+    if (activeId === null) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveId(null)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [activeId])
+
   const toggle = (id: string) => setActiveId((current) => (current === id ? null : id))
 
   return (
@@ -91,13 +103,17 @@ export default function ExpandableCards({
                     a formar parte de su nombre accesible y un lector de
                     pantalla recita el párrafo completo al enfocarlo, incluso
                     con la carta cerrada. El aria-label fija ese nombre y el
-                    aria-controls apunta al panel que despliega. */}
+                    aria-controls apunta al panel que despliega.
+                    El label es solo el título: el subtítulo y el periodo son
+                    texto visible dentro de la carta y el lector de pantalla ya
+                    los recorre por su cuenta, así que incluirlos aquí hacía que
+                    se anunciasen dos veces. */}
                 <button
                   type="button"
                   onClick={() => toggle(item.id)}
                   aria-expanded={isActive}
                   aria-controls={panelId}
-                  aria-label={`${item.title}. ${item.subtitle}. ${item.period}`}
+                  aria-label={item.title}
                   className="absolute inset-0 z-10 rounded-2xl"
                 />
 

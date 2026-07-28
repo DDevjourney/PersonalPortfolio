@@ -50,6 +50,43 @@
       rel="stylesheet"
     />
     <title>Carlos — Desarrollador Web</title>
+
+    <!-- Datos estructurados: describen a la persona en un formato que los
+         buscadores entienden sin tener que deducirlo del texto. `mainEntity`
+         apunta al Person para que quede claro que la página ES el perfil, y
+         `sameAs` conecta este dominio con los perfiles externos.
+         La descripción es la misma que meta description / og / twitter:
+         si se cambia una, cambiar las cuatro. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "url": "https://www.carlosdsp.es/",
+        "inLanguage": "es-ES",
+        "mainEntity": {
+          "@type": "Person",
+          "name": "Carlos",
+          "url": "https://www.carlosdsp.es/",
+          "image": "https://www.carlosdsp.es/perfil.jpg",
+          "jobTitle": "Desarrollador Web",
+          "description": "Desarrollador web con base en PHP, Laravel, JavaScript y React. Diseño y construyo sitios rápidos y a medida.",
+          "knowsLanguage": ["es", "en"],
+          "knowsAbout": [
+            "PHP",
+            "Laravel",
+            "JavaScript",
+            "React",
+            "SQL",
+            "Docker",
+            "Diseño UX/UI"
+          ],
+          "sameAs": [
+            "https://github.com/DDevjourney",
+            "https://www.linkedin.com/in/cdsp/"
+          ]
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

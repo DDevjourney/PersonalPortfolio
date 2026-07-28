@@ -143,7 +143,5 @@ Las cartas que no están abiertas se distinguen con `bg-paper-light`, no bajando
 
 ## Pendientes conocidos
 
-- **`app.js` y `style.css` en la raíz son restos de la versión anterior** del portfolio (HTML/CSS/JS puro). Ya no los referencia nadie: `index.html` solo carga `/src/main.tsx`. Se pueden borrar, igual que la carpeta `img/`.
-- **Falta metadata social:** el `index.html` no tiene Open Graph ni Twitter Cards, así que el enlace se comparte sin imagen ni descripción. Tampoco hay `canonical`, `robots.txt` ni `sitemap.xml`.
-- **Contraste por debajo de WCAG AA:** `ink-soft` sobre `paper` da 4,45:1 (el mínimo es 4,5) y `ink-faint` se queda en 1,67:1, que es lo que usa el hover de Servicios.
-- **El menú móvil cerrado sigue capturando el foco de teclado:** sus 5 enlaces son enfocables aunque no se vean, porque se ocultan con `max-h-0` y no con `visibility`/`inert`.
+- **Las credenciales de EmailJS van dentro del bundle público.** Es inevitable sin backend: Vite inlinea las variables `VITE_*` en el JS que descarga el navegador, así que el `serviceId`, el `templateId` y la *public key* son visibles para cualquiera. La *public key* está diseñada para serlo, pero con las tres se puede enviar correo desde la cuenta y agotar la cuota mensual. **Mitigación pendiente, en el panel de EmailJS y no en el código:** restringir el *domain allowlist* a `carlosdsp.es` / `www.carlosdsp.es` y activar el límite por IP. En el formulario ya hay un honeypot que filtra los bots más simples.
+- **`ink-faint` (1,67:1 sobre `paper`) no vale para texto.** Sigue en la paleta pero ahora mismo no lo usa nadie; si se recupera, solo para bordes o elementos decorativos.

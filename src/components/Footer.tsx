@@ -1,4 +1,4 @@
-/** Enlaces a redes (placeholders — sustitúyelos por los tuyos). */
+/** Enlaces a redes. */
 const socials = [
   { label: 'GitHub', href: 'https://github.com/DDevjourney' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/cdsp/' },
@@ -24,7 +24,10 @@ export default function Footer() {
             <a
               key={social.label}
               href={social.href}
-              className="text-sm font-medium text-ink-soft transition-colors duration-300 hover:text-ink"
+              // py-2 sube el alto del objetivo de 20px a 36px, por encima del
+              // mínimo de 24px de WCAG 2.5.8 (mismo motivo que en el hero).
+              // -my-2 recupera el hueco añadido para no descuadrar la fila.
+              className="-my-2 py-2 text-sm font-medium text-ink-soft transition-colors duration-300 hover:text-ink"
             >
               {social.label}
             </a>

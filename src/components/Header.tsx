@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /** Enlaces de navegación; el href apunta al id de cada sección. */
 const navLinks = [
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Experiencia', href: '#experiencia' },
-  { label: 'Sobre mí', href: '#estudios' },
+  // La etiqueta es la de la sección de destino: "Sobre mí" prometía otra cosa
+  // y aterrizaba igualmente en el bloque titulado "Estudios".
+  { label: 'Estudios', href: '#estudios' },
   { label: 'Servicios', href: '#servicios' },
-      
 ]
 
 /**
@@ -15,6 +16,21 @@ const navLinks = [
  */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  // Escape cierra el menú y devuelve el foco al botón que lo abrió: si el foco
+  // se quedara dentro del menú plegado, el siguiente Tab saltaría desde un
+  // punto que ya no se ve. Solo se engancha con el menú abierto.
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setMenuOpen(false)
+      toggleRef.current?.focus()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [menuOpen])
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-paper/80 backdrop-blur-sm">
@@ -43,6 +59,7 @@ export default function Header() {
 
         {/* Botón hamburguesa (móvil) */}
         <button
+          ref={toggleRef}
           type="button"
           aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={menuOpen}

@@ -8,7 +8,10 @@ export default {
         paper: '#E8E6E1',
         'paper-light': '#EDEBE7',
         ink: '#1A1A1A',
-        'ink-soft': '#6B6862',
+        // 4.87:1 sobre `paper`. El valor anterior (#6B6862) daba 4.45:1 y se
+        // quedaba justo por debajo del 4.5:1 que WCAG AA pide para texto
+        // normal, que es el tamaño en el que se usa casi siempre.
+        'ink-soft': '#65625C',
         'ink-faint': '#B7B3AC',
       },
       fontFamily: {
