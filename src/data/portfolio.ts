@@ -39,6 +39,13 @@ export const projects: Project[] = [
     description:
       'Landing page corporativa sobre un proyecto de sostenibilidad.',
     url: 'https://observatorioagroalimentario.com/proyectos/GOS/greendrop/',
+  },
+     {id: '04',
+    title: 'Stremio',
+    stack: 'React + Typescript',
+    description:
+      'Landing page, centrada en la conversión, que promociona Stremio, creada como ejercicio de diseño front-end.',
+    url: 'https://ddevjourney.github.io/stremio-pw/',
   }
 ]
 
