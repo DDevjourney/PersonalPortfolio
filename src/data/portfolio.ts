@@ -41,6 +41,20 @@ export const projects: Project[] = [
     url: 'https://observatorioagroalimentario.com/proyectos/GOS/greendrop/',
   },
      {id: '04',
+    title: 'GOTArroz',
+    stack: 'JavaScript, HTML, CSS',
+    description:
+      'Landing page corportiva sobre un proyecto sostenible',
+    url: 'https://observatorioagroalimentario.com/proyectos/GOS/gotarroz/',
+  },
+     {id: '05',
+    title: 'AGRHoung',
+    stack: 'JavaScript, HTML, CSS',
+    description:
+      'Landing page corporativa sobre la aplicaciòn de robots inteligentes en el cultivo',
+    url: 'https://observatorioagroalimentario.com/proyectos/GOS/agrhound/',
+  }
+     {id: '06',
     title: 'Stremio',
     stack: 'React + Typescript',
     description:
