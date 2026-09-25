@@ -69,7 +69,7 @@ export const experience: ExpandableItem[] = [
     subtitle: 'Desarrollador Web',
     period: '2026 - Actualidad',
     description:
-      'Desarrollo y mantenimiento de aplicaciones web con PHP y Laravel. Implementación de nuevas funcionalidades, integración de APIs y trabajo con bases de datos relacionales en un entorno de equipo.',
+      'Desarrollo y mantenimiento de aplicaciones web con React, JavaScript, TypeScript, PHP y Laravel. Implementación de nuevas funcionalidades, integración de APIs y trabajo con bases de datos relacionales en un entorno de equipo.',
   },
   {
     id: 'exp-2',
