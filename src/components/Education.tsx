@@ -1,14 +1,15 @@
-import ExpandableCards from './ExpandableCards'
-import { education } from '../data/portfolio'
+import EducationTimeline from './EducationTimeline'
+import { education, certifications } from '../data/portfolio'
 
-/** Sección Estudios: mismo componente de cartas expandibles que Experiencia. */
+/** Sección Estudios: timeline vertical, distinta del carrusel de Experiencia. */
 export default function Education() {
   return (
-    <ExpandableCards
+    <EducationTimeline
       sectionId="estudios"
       index="004"
       title="Estudios"
       items={education}
+      certifications={certifications}
     />
   )
 }

@@ -27,8 +27,8 @@ export interface Project {
 }
 
 /**
- * Datos compartidos por las cartas expandibles de Experiencia y Estudios.
- * Ambas secciones reutilizan el mismo componente <ExpandableCards>.
+ * Datos compartidos por Experiencia (`MotionCarousel`) y Estudios
+ * (`EducationTimeline`).
  */
 export interface ExpandableItem {
   /** Identificador único */

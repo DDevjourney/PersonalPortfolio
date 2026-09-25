@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { motion, type Transition } from 'motion/react'
+import { motion, useMotionValue, useTransform, type MotionValue, type Transition } from 'motion/react'
 import type { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
@@ -91,6 +91,59 @@ function useEmblaControls(emblaApi: EmblaCarouselType | undefined): EmblaControl
   return { selectedIndex, scrollSnaps, prevDisabled, nextDisabled, onDotClick, onPrev, onNext }
 }
 
+/**
+ * Progreso continuo del scroll (0-1) del carrusel, como `MotionValue` en vez
+ * de estado de React: así el parallax de cada slide se anima en cada frame
+ * del drag/scroll sin re-renderizar el árbol de React.
+ */
+function useEmblaScrollProgress(emblaApi: EmblaCarouselType | undefined): MotionValue<number> {
+  const scrollProgress = useMotionValue(0)
+
+  React.useEffect(() => {
+    if (!emblaApi) return
+
+    const update = () => scrollProgress.set(emblaApi.scrollProgress())
+    update()
+    emblaApi.on('scroll', update).on('reInit', update)
+
+    return () => {
+      emblaApi.off('scroll', update).off('reInit', update)
+    }
+  }, [emblaApi, scrollProgress])
+
+  return scrollProgress
+}
+
+const PARALLAX_SCALE_LOSS = 0.08
+const PARALLAX_OPACITY_LOSS = 0.4
+
+interface ParallaxSlideProps {
+  progress: MotionValue<number>
+  /** Posición de snap de este slide, en el mismo espacio 0-1 que `progress`. */
+  target: number
+  /** Distancia aproximada entre snaps consecutivos, para normalizar el diff. */
+  gap: number
+  children: React.ReactNode
+}
+
+/** Escala/atenúa un slide según su distancia al punto de scroll activo. */
+function ParallaxSlide({ progress, target, gap, children }: ParallaxSlideProps) {
+  const scale = useTransform(progress, (p) => {
+    const normalized = gap > 0 ? Math.min(Math.abs(target - p) / gap, 1) : 0
+    return 1 - normalized * PARALLAX_SCALE_LOSS
+  })
+  const opacity = useTransform(progress, (p) => {
+    const normalized = gap > 0 ? Math.min(Math.abs(target - p) / gap, 1) : 0
+    return 1 - normalized * PARALLAX_OPACITY_LOSS
+  })
+
+  return (
+    <motion.div className="w-full" style={{ scale, opacity }}>
+      {children}
+    </motion.div>
+  )
+}
+
 export default function MotionCarousel<T>({
   items,
   renderItem,
@@ -101,6 +154,8 @@ export default function MotionCarousel<T>({
   const [emblaRef, emblaApi] = useEmblaCarousel(options)
   const { selectedIndex, scrollSnaps, prevDisabled, nextDisabled, onDotClick, onPrev, onNext } =
     useEmblaControls(emblaApi)
+  const scrollProgress = useEmblaScrollProgress(emblaApi)
+  const snapGap = scrollSnaps.length > 1 ? 1 / (scrollSnaps.length - 1) : 1
 
   return (
     <div className={`w-full space-y-6 ${slideSizeClassName}`}>
@@ -114,14 +169,9 @@ export default function MotionCarousel<T>({
                 key={getKey(item, index)}
                 className="mr-[var(--slide-spacing)] flex min-w-0 flex-none basis-[var(--slide-size)]"
               >
-                <motion.div
-                  className="w-full"
-                  initial={false}
-                  animate={{ scale: isActive ? 1 : 0.92, opacity: isActive ? 1 : 0.6 }}
-                  transition={transition}
-                >
+                <ParallaxSlide progress={scrollProgress} target={scrollSnaps[index] ?? 0} gap={snapGap}>
                   {renderItem(item, isActive)}
-                </motion.div>
+                </ParallaxSlide>
               </div>
             )
           })}

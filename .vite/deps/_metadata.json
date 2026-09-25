@@ -1,0 +1,79 @@
+{
+  "hash": "8be1ff95",
+  "configHash": "00bb5e76",
+  "lockfileHash": "5a59e4e3",
+  "browserHash": "8d350a0e",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "bd4b221e",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "5f25b7b7",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "0f2db2cb",
+      "needsInterop": true
+    },
+    "react-simple-typewriter": {
+      "src": "../../node_modules/react-simple-typewriter/dist/index.js",
+      "file": "react-simple-typewriter.js",
+      "fileHash": "cf874486",
+      "needsInterop": true
+    },
+    "lenis": {
+      "src": "../../node_modules/lenis/dist/lenis.mjs",
+      "file": "lenis.js",
+      "fileHash": "a48d2b03",
+      "needsInterop": false
+    },
+    "@emailjs/browser": {
+      "src": "../../node_modules/@emailjs/browser/es/index.js",
+      "file": "@emailjs_browser.js",
+      "fileHash": "d06f8d97",
+      "needsInterop": false
+    },
+    "motion/react": {
+      "src": "../../node_modules/motion/dist/es/react.mjs",
+      "file": "motion_react.js",
+      "fileHash": "fe56a776",
+      "needsInterop": false
+    },
+    "embla-carousel-react": {
+      "src": "../../node_modules/embla-carousel-react/esm/embla-carousel-react.esm.js",
+      "file": "embla-carousel-react.js",
+      "fileHash": "9bebaee5",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.mjs",
+      "file": "lucide-react.js",
+      "fileHash": "bca224c8",
+      "needsInterop": false
+    },
+    "animejs": {
+      "src": "../../node_modules/animejs/dist/modules/index.js",
+      "file": "animejs.js",
+      "fileHash": "b3fb14df",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-RZSASJON": {
+      "file": "chunk-RZSASJON.js"
+    },
+    "chunk-TWJRYSII": {
+      "file": "chunk-TWJRYSII.js"
+    },
+    "chunk-DC5AMYBS": {
+      "file": "chunk-DC5AMYBS.js"
+    }
+  }
+}

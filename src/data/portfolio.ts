@@ -92,16 +92,8 @@ export const experience: ExpandableItem[] = [
 /* ------------------------------------------------------------------ */
 /* ESTUDIOS — placeholder                                              */
 /* ------------------------------------------------------------------ */
+/** Titulaciones principales: timeline vertical de la sección Estudios. */
 export const education: ExpandableItem[] = [
-  
-   {
-    id: 'edu-1',
-    title: 'MOOC en Ciberseguridad',
-    subtitle: 'Curso de especialización en Universidad de Málaga',
-    period: '2025 - 2026',
-    description:
-      'La formación abarca los principales ámbitos de la ciberseguridad, desde los fundamentos hasta las tecnologías más avanzadas. Incluye criptografía aplicada, seguridad en redes, protección de sistemas y programación segura, junto con áreas humanas como la ingeniería social y la privacidad. También aborda temas especializados como seguridad de hardware y sistemas , el análisis de malware, la computación post-cuántica y el diseño de soluciones seguras basadas en blockchain e inteligencia artificial, fomentando una visión integral de la protección digital.',
-  },
   {
     id: 'edu-2',
     title: 'CFGS Desarrollo de Aplicaciones Web',
@@ -110,20 +102,32 @@ export const education: ExpandableItem[] = [
     description:
       'Formación especializada en desarrollo web front-end y back-end: PHP, Laravel, bases de datos, JavaScript, despliegue y metodologías de desarrollo de software.',
   },
-   {
-    id: 'edu-3',
-    title: 'Certificado de Inglés B2',
-    subtitle: 'Curso de idioma en Universidad de Cambridge',
-    period: '2022',
-    description:
-      'Nivel intermedio-alto reconocido internacionalmente, que acredita competencia sólida en comprensión oral y escrita, expresión fluida en contextos académicos y profesionales, y dominio gramatical avanzado.',
-  },
-   {
+  {
     id: 'edu-4',
     title: 'Grado en Derecho',
     subtitle: 'Grado universitario en Universidad de Extremadura',
     period: '2015 — 2021',
     description:
       'En mi formación en Derecho, desarrollé habilidades como análisis crítico, razonamiento lógico y resolución de conflictos. Estos conocimientos, junto con mi curiosidad en áreas como economía y política, me dieron una visión integral que aplico en todas mis experiencias profesionales.',
+  },
+]
+
+/** Cursos y certificados complementarios: fila de chips al final de Estudios. */
+export const certifications: ExpandableItem[] = [
+  {
+    id: 'edu-1',
+    title: 'MOOC en Ciberseguridad',
+    subtitle: 'Curso de especialización en Universidad de Málaga',
+    period: '2025 - 2026',
+    description:
+      'La formación abarca los principales ámbitos de la ciberseguridad, desde los fundamentos hasta las tecnologías más avanzadas. Incluye criptografía aplicada, seguridad en redes, protección de sistemas y programación segura, junto con áreas humanas como la ingeniería social y la privacidad. También aborda temas especializados como seguridad de hardware y sistemas , el análisis de malware, la computación post-cuántica y el diseño de soluciones seguras basadas en blockchain e inteligencia artificial, fomentando una visión integral de la protección digital.',
+  },
+  {
+    id: 'edu-3',
+    title: 'Certificado de Inglés B2',
+    subtitle: 'Curso de idioma en Universidad de Cambridge',
+    period: '2022',
+    description:
+      'Nivel intermedio-alto reconocido internacionalmente, que acredita competencia sólida en comprensión oral y escrita, expresión fluida en contextos académicos y profesionales, y dominio gramatical avanzado.',
   },
 ]
