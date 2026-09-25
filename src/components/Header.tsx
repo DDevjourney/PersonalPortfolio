@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 
 /** Enlaces de navegación; el href apunta al id de cada sección. */
 const navLinks = [
+  { label: 'Skills', href: '#skills' },
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Experiencia', href: '#experiencia' },
   // La etiqueta es la de la sección de destino: "Sobre mí" prometía otra cosa
   // y aterrizaba igualmente en el bloque titulado "Estudios".
   { label: 'Estudios', href: '#estudios' },
+  { label: 'Contacto', href: '#contacto' },
 ]
 
 /**
