@@ -23,7 +23,14 @@ export default function Experience() {
           <MotionCarousel
             items={experience}
             getKey={(item) => item.id}
-            options={{ loop: true, align: 'start' }}
+            // Sin `loop`: con solo 3 tarjetas no hace falta, y combinado con
+            // `containScroll: 'keepSnaps'` rompía el propio loop (el botón
+            // "siguiente" se quedaba deshabilitado en la última tarjeta).
+            // `keepSnaps` solo: por defecto Embla fusiona el snap de la
+            // última tarjeta con el anterior cuando no hay suficiente
+            // distancia de scroll para alinearla a 'start' (pasa con solo 3
+            // slides anchos) — así cada una conserva su propia posición.
+            options={{ align: 'start', containScroll: 'keepSnaps' }}
             slideSizeClassName={SLIDE_SIZE_CLASSNAME}
             renderItem={(item: ExpandableItem, isActive) => (
               <div
