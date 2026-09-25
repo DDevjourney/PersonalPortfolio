@@ -4,15 +4,22 @@ import type { Skill, Project, ExpandableItem } from './types'
 /* SKILLS — edita libremente esta lista                                */
 /* ------------------------------------------------------------------ */
 export const skills: Skill[] = [
-  { name: 'UX/UI', category: 'Diseño' },
-  { name: 'PHP', category: 'Backend' },
-  { name: 'SQL', category: 'Bases de datos' },
-  { name: 'React', category: 'Frontend' },
+  // Frontend
   { name: 'JavaScript', category: 'Frontend' },
   { name: 'TypeScript', category: 'Frontend' },
-  { name: 'Docker', category: 'Plataformas' },
+  { name: 'React', category: 'Frontend' },
+  // Backend
+  { name: 'PHP', category: 'Backend' },
+  { name: 'Node.js', category: 'Backend' },
+  { name: 'Express', category: 'Backend' },
+  { name: 'API Rest', category: 'Backend' },
+  // Bases de datos
+  { name: 'SQL', category: 'Bases de datos' },
   { name: 'MySQL', category: 'Bases de datos' },
   { name: 'MariaDB', category: 'Bases de datos' },
+  // Diseño y plataformas
+  { name: 'UX/UI', category: 'Diseño' },
+  { name: 'Docker', category: 'Plataformas' },
 ]
 
 /* ------------------------------------------------------------------ */
