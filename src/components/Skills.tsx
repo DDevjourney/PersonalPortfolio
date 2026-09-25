@@ -1,9 +1,13 @@
 import SectionHeading from './SectionHeading'
+import MotionCarousel from './MotionCarousel'
 import { skills } from '../data/portfolio'
+import type { Skill } from '../data/types'
 
 /**
- * Sección Skills: cabecera editorial + rejilla de tarjetas sobrias.
- * Cada tarjeta muestra el nombre en bold y su categoría en gris.
+ * Sección Skills: cabecera editorial + carrusel deslizable de tarjetas
+ * sobrias. Cada tarjeta muestra el nombre en bold y su categoría en gris,
+ * igual que la rejilla anterior; el slide activo se escala ligeramente
+ * (ver `MotionCarousel`).
  */
 export default function Skills() {
   return (
@@ -11,20 +15,18 @@ export default function Skills() {
       <div className="container-content">
         <SectionHeading index="001" title="Skills" />
 
-        <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink/15 bg-ink/15 sm:grid-cols-3 lg:grid-cols-6">
-          {skills.map((skill) => (
-            <div
-              key={skill.name}
-              className="group flex flex-col gap-1 bg-paper p-6 transition-colors duration-300 hover:bg-ink"
-            >
-              <span className="font-archivo text-xl font-bold text-ink transition-colors duration-300 group-hover:text-paper">
-                {skill.name}
-              </span>
-              <span className="text-xs uppercase tracking-wider text-ink-soft transition-colors duration-300 group-hover:text-paper/70">
-                {skill.category}
-              </span>
-            </div>
-          ))}
+        <div className="mt-12">
+          <MotionCarousel
+            items={skills}
+            getKey={(skill) => skill.name}
+            options={{ loop: true, align: 'start' }}
+            renderItem={(skill: Skill) => (
+              <div className="flex h-full flex-col gap-1 rounded-2xl border border-ink/15 bg-paper p-6">
+                <span className="font-archivo text-xl font-bold text-ink">{skill.name}</span>
+                <span className="text-xs uppercase tracking-wider text-ink-soft">{skill.category}</span>
+              </div>
+            )}
+          />
         </div>
       </div>
     </section>
