@@ -1,20 +1,124 @@
+import { useEffect, useRef } from 'react'
+import { animate, stagger, utils } from 'animejs'
+
+/** Líneas del titular. Se parten en letras al montar. */
+const HERO_LINES = ['Desarrollador', 'Web', '<Builder />'] as const
+
 /**
  * Hero a dos columnas: titular enorme a la izquierda y, a la derecha,
  * foto circular + presentación breve.
+ *
+ * El titular se compone letra a letra: cada línea es un contenedor con
+ * un `clip-path` que solo recorta verticalmente (deja libre el eje X
+ * para que "DESARROLLADOR" pueda desbordarse hacia la columna de la foto
+ * como en el diseño original). Las letras arrancan desplazadas 105%
+ * hacia abajo, fuera del recorte, y al montar suben en cascada con
+ * `stagger` y easing outExpo (mismo perfil que Lenis). Al final del
+ * recorrido enciende el caret parpadeante detrás de `<Builder />`.
  */
 export default function Hero() {
+  const headlineRef = useRef<HTMLHeadingElement>(null)
+  const caretRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!headlineRef.current) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const letters = headlineRef.current.querySelectorAll<HTMLSpanElement>('[data-letter]')
+    const caret = caretRef.current
+
+    // Estado inicial explícito por si React tarda un frame en pintar: sin
+    // esto se ve un flash de las letras en su posición final antes de que
+    // arranque la animación.
+    utils.set(letters, { translateY: '105%' })
+    if (caret) utils.set(caret, { opacity: 0 })
+
+    // Duración base * stagger: 900ms * 27 letras a 28ms → ~1550ms total.
+    // El caret arranca ~300ms antes del final para que su primer flash
+    // coincida con la última letra aterrizando.
+    const STAGGER = 28
+    const DURATION = 900
+    const totalMs = DURATION + STAGGER * (letters.length - 1)
+
+    animate(letters, {
+      translateY: ['105%', '0%'],
+      duration: DURATION,
+      ease: 'out(4)',
+      delay: stagger(STAGGER),
+      // Fija el valor final en el style inline. anime v4 corre con WAAPI y
+      // sin este cierre el navegador podría volver al `translateY: '105%'`
+      // aplicado con `utils.set` de arriba al terminar la animación.
+      onComplete: () => utils.set(letters, { translateY: '0%' }),
+    })
+
+    if (caret) {
+      animate(caret, {
+        opacity: [0, 1],
+        duration: 240,
+        ease: 'linear',
+        delay: Math.max(0, totalMs - 300),
+        // Al terminar el fade in, deja el parpadeo a cargo de una
+        // animación CSS ligera para no mantener anime.js vivo eternamente.
+        onComplete: () => caret.classList.add('caret-blink'),
+      })
+    }
+  }, [])
+
   return (
     <section id="inicio" className="pt-28 md:pt-36">
       <div className="container-content">
         <div className="flex flex-col gap-12 lg:flex-row lg:gap-10">
           {/* Columna izquierda (~60%): titular */}
           <div className="lg:w-3/5">
-            <h1 className="font-display text-5xl uppercase leading-[0.95] text-ink sm:text-7xl md:text-8xl lg:text-[7rem]">
-              Desarrollador
-              <br />
-              Web
-              <br />
-              <span className="text-ink-soft">&lt;Builder /&gt;</span>
+            <h1
+              ref={headlineRef}
+              className="font-display text-5xl uppercase leading-[0.95] text-ink sm:text-7xl md:text-8xl lg:text-[7rem]"
+            >
+              {HERO_LINES.map((line, lineIndex) => {
+                const isBuilderLine = lineIndex === HERO_LINES.length - 1
+                return (
+                  // pb-[0.04em] deja un cuarto de píxel bajo el baseline
+                  // para que el `clip-path` no siegue el trazo diagonal
+                  // de glifos como `/` o `>` en Anton.
+                  <span
+                    key={line}
+                    // `whitespace-nowrap`: al partir la línea en spans
+                    // `inline-block`, cada letra se vuelve un ítem
+                    // envolvible y el navegador rompe la palabra a la
+                    // mitad ("DESARROLLA/DOR"). Con nowrap se preserva
+                    // como una unidad tipográfica.
+                    //
+                    // clip-path recorta solo el eje Y (para que las
+                    // letras aparezcan subiendo desde el baseline) y
+                    // deja el X libre. `overflow-hidden` cortaría los
+                    // dos ejes a la vez y "DESARROLLADOR" perdería la
+                    // cola que sale de su columna (era intencional en
+                    // el diseño original).
+                    className={`block whitespace-nowrap pb-[0.04em] [clip-path:inset(0_-100vw_0_-100vw)] ${
+                      isBuilderLine ? 'text-ink-soft' : ''
+                    }`}
+                  >
+                    {Array.from(line).map((char, i) => (
+                      <span
+                        // La `key` incluye la línea porque letras repetidas
+                        // (varias `r` en "Desarrollador") comparten char.
+                        key={`${lineIndex}-${i}`}
+                        data-letter
+                        className="inline-block will-change-transform"
+                      >
+                        {char === ' ' ? ' ' : char}
+                      </span>
+                    ))}
+                    {isBuilderLine && (
+                      <span
+                        ref={caretRef}
+                        aria-hidden
+                        className="ml-[0.08em] inline-block h-[0.75em] w-[0.5ch] translate-y-[-0.05em] bg-current align-middle"
+                      />
+                    )}
+                  </span>
+                )
+              })}
             </h1>
           </div>
 
