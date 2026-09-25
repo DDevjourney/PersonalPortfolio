@@ -17,7 +17,17 @@ interface MotionCarouselProps<T> {
   renderItem: (item: T, isActive: boolean) => React.ReactNode
   getKey: (item: T, index: number) => React.Key
   options?: EmblaOptionsType
+  /**
+   * Clases con las custom properties `--slide-size`/`--slide-spacing` por
+   * breakpoint. Por defecto tunea para tarjetas pequeñas (Skills); un
+   * carrusel de tarjetas con más contenido (p. ej. Experiencia) necesita
+   * slides más anchos.
+   */
+  slideSizeClassName?: string
 }
+
+const DEFAULT_SLIDE_SIZE_CLASSNAME =
+  '[--slide-size:78%] [--slide-spacing:1rem] sm:[--slide-size:48%] md:[--slide-size:32%] lg:[--slide-size:24%]'
 
 interface EmblaControls {
   selectedIndex: number
@@ -81,13 +91,19 @@ function useEmblaControls(emblaApi: EmblaCarouselType | undefined): EmblaControl
   return { selectedIndex, scrollSnaps, prevDisabled, nextDisabled, onDotClick, onPrev, onNext }
 }
 
-export default function MotionCarousel<T>({ items, renderItem, getKey, options }: MotionCarouselProps<T>) {
+export default function MotionCarousel<T>({
+  items,
+  renderItem,
+  getKey,
+  options,
+  slideSizeClassName = DEFAULT_SLIDE_SIZE_CLASSNAME,
+}: MotionCarouselProps<T>) {
   const [emblaRef, emblaApi] = useEmblaCarousel(options)
   const { selectedIndex, scrollSnaps, prevDisabled, nextDisabled, onDotClick, onPrev, onNext } =
     useEmblaControls(emblaApi)
 
   return (
-    <div className="w-full space-y-6 [--slide-size:78%] [--slide-spacing:1rem] sm:[--slide-size:48%] md:[--slide-size:32%] lg:[--slide-size:24%]">
+    <div className={`w-full space-y-6 ${slideSizeClassName}`}>
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y touch-pinch-zoom">
           {items.map((item, index) => {
