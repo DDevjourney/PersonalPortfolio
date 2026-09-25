@@ -226,7 +226,7 @@ export default function Contact() {
                 value={form.mensaje}
                 onChange={update('mensaje')}
                 disabled={sending}
-                placeholder="Cuéntame sobre tu proyecto..."
+                placeholder="Escribe tu mensaje aquí"
                 className={`${inputClass} resize-none`}
                 {...a11y('mensaje')}
               />
