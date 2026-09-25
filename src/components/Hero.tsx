@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { animate, stagger, utils } from 'animejs'
+import useParallax from '../hooks/useParallax'
 
 /** Líneas del titular. Se parten en letras al montar. */
 const HERO_LINES = ['Desarrollador', 'Web', '<Builder />'] as const
@@ -19,6 +20,7 @@ const HERO_LINES = ['Desarrollador', 'Web', '<Builder />'] as const
 export default function Hero() {
   const headlineRef = useRef<HTMLHeadingElement>(null)
   const caretRef = useRef<HTMLSpanElement>(null)
+  const parallaxOffset = useParallax()
 
   useEffect(() => {
     if (!headlineRef.current) return
@@ -125,7 +127,10 @@ export default function Hero() {
           {/* Columna derecha (~40%): foto + presentación */}
           <div className="flex flex-col gap-6 lg:w-2/5">
             {/* Foto circular de perfil */}
-            <div className="flex justify-start lg:justify-center">
+            <div
+              className="flex justify-start lg:justify-center"
+              style={{ transform: `translateY(${parallaxOffset}px)` }}
+            >
               {/* El recorte va en el contenedor, no en la <img>: la imagen es
                   cuadrada igual que el hueco, así que con `object-cover` a
                   secas se ve entera y encogerla no quita nada de pared, solo

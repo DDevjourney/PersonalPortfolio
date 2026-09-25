@@ -1,15 +1,17 @@
-# Experiencia inmersiva de scroll (fase 1): reveal de títulos + raíl de progreso
+# Experiencia inmersiva de scroll: reveal, raíl de progreso, parallax e índice
 
 ## Contexto
 
-El proyecto ya usa Lenis (`src/hooks/useSmoothScroll.ts`) solo para scroll suave y anclas del header, y `animejs` (`src/components/Hero.tsx`) para el reveal letra a letra del titular del Hero. El resto de secciones (`SectionHeading.tsx` y sus 6 usos) no tienen ninguna animación de entrada, y no existe ningún indicador de progreso de scroll.
+El proyecto ya usa Lenis (`src/hooks/useSmoothScroll.ts`) solo para scroll suave y anclas del header, y `animejs` (`src/components/Hero.tsx`) para el reveal letra a letra del titular del Hero. El resto de secciones (`SectionHeading.tsx` y sus 6 usos) no tenían ninguna animación de entrada, y no existía ningún indicador de progreso de scroll.
 
-Esta es la primera fase de una lista más amplia de ideas para hacer el scroll más inmersivo (ver conversación previa). Cubre únicamente las dos primeras:
+Lista más amplia de ideas para hacer el scroll más inmersivo (ver conversación previa):
 
-1. Reveal por scroll en los títulos de sección.
-2. Raíl vertical de progreso de scroll.
+1. Reveal por scroll en los títulos de sección. **(fase 1, implementado)**
+2. Raíl vertical de progreso de scroll. **(fase 1, implementado)**
+3. Parallax sutil en la foto del Hero. **(fase 2)**
+6. Índice de sección fijo tipo brújula editorial. **(fase 2)**
 
-Deliberadamente fuera de scope: parallax en la foto del Hero, pin/scrub en `ExpandableCards`, transiciones de sección con `clip-path`, e índice de sección tipo brújula. Se abordarán en fases posteriores si se decide seguir.
+Deliberadamente fuera de scope: pin/scrub en `ExpandableCards` y transiciones de sección con `clip-path` (ideas 4 y 5). Se abordarán en fases posteriores si se decide seguir.
 
 ## 1. Reveal de títulos de sección (line-mask)
 
@@ -48,10 +50,40 @@ Deliberadamente fuera de scope: parallax en la foto del Hero, pin/scrub en `Expa
 - **Responsive:** oculto por defecto (`hidden md:block`) — en móvil el margen de 24px es demasiado estrecho para un elemento decorativo sin competir con el contenido.
 - Se monta una única vez en `App.tsx`, como hermano de `Header`.
 
+## 3. Parallax sutil en la foto del Hero
+
+**Objetivo:** la foto circular del Hero se desplaza ligeramente hacia abajo (respecto al resto del contenido, que sube 1:1 con el scroll) a medida que el usuario baja, dando sensación de profundidad sin ser vistoso. Tope de 20px de desplazamiento total.
+
+**Hook: `useParallax(factor = 0.05, maxOffset = 20)`**
+- Devuelve un `number`: el offset actual en px.
+- Bucle `requestAnimationFrame` (mismo patrón que `useScrollProgress`) que calcula `Math.min(window.scrollY * factor, maxOffset)`.
+- Si `prefers-reduced-motion: reduce` está activo, devuelve siempre `0` y no arranca el loop — a diferencia del raíl de progreso, este es un movimiento decorativo continuo, no informativo, así que sí se gatea.
+
+**Cambios en `Hero.tsx`:**
+- El contenedor de la foto circular aplica `style={{ transform: `translateY(${offset}px)` }}` con el offset de `useParallax()`.
+
+## 6. Índice de sección fijo
+
+**Objetivo:** un indicador fijo en la esquina inferior izquierda, junto al raíl de progreso, que muestra la sección actual como `01 / 06 — SKILLS` y cambia según el scroll.
+
+**Datos: `src/data/sections.ts`**
+- Array `SECTIONS` con `{ id, index, title }` para las 6 secciones, replicando exactamente los valores que ya usan los `SectionHeading` existentes: `skills` (001) → `contacto` (006).
+
+**Hook: `useActiveSection(sections)`**
+- Un único `IntersectionObserver` con `rootMargin: '-45% 0px -45% 0px'` (dispara cuando una sección cruza la franja central del viewport) sobre los 6 `<section id="...">` — patrón scrollspy estándar.
+- Devuelve el `id` de la última sección cuya franja central cruzó el observer; si ninguna ha cruzado aún (el usuario sigue dentro del Hero), devuelve por defecto el primer id de `sections` (`skills`).
+
+**Componente: `SectionIndexBadge.tsx`**
+- Fijo en la esquina inferior izquierda, mismo offset horizontal que `ScrollProgressRail` (`left-6 md:left-10 lg:left-16`), `bottom-6 md:bottom-10`.
+- Texto `font-archivo text-xs uppercase tracking-wider text-ink-soft`, formato `01 / 06 — SKILLS`.
+- Oculto en móvil (`hidden md:block`), igual que el raíl.
+- Se monta una vez en `App.tsx`, junto a `ScrollProgressRail`.
+
 ## Testing
 
-Ninguno de los dos añade lógica de negocio ni estado persistente: verificación manual en navegador cubre el criterio de aceptación:
+Ninguna de las cuatro piezas añade lógica de negocio ni estado persistente: verificación manual en navegador cubre el criterio de aceptación:
 - Cada una de las 6 secciones revela su título una sola vez al hacer scroll, y no se repite al subir/bajar repetidamente.
-- Con `prefers-reduced-motion: reduce` activado en el SO/navegador, los títulos aparecen estáticos sin animación.
-- El raíl de progreso sube de 0% a 100% de forma continua a lo largo de toda la página, visible desde `md:` en adelante, oculto en móvil.
-- El raíl se anima igual con o sin `prefers-reduced-motion`.
+- Con `prefers-reduced-motion: reduce` activado en el SO/navegador, los títulos aparecen estáticos sin animación, y el offset de parallax se queda en 0.
+- El raíl de progreso sube de 0% a 100% de forma continua a lo largo de toda la página, visible desde `md:` en adelante, oculto en móvil. Se anima igual con o sin `prefers-reduced-motion`.
+- La foto del Hero se desplaza como máximo 20px, y dicho desplazamiento no crece más allá de ese tope aunque se siga bajando.
+- El índice de sección cambia correctamente al cruzar cada una de las 6 secciones, muestra `01 / 06 — SKILLS` por defecto al inicio, y permanece oculto en móvil.
