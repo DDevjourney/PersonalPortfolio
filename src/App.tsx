@@ -1,4 +1,5 @@
 import Header from './components/Header'
+import ScrollProgressRail from './components/ScrollProgressRail'
 import Hero from './components/Hero'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
@@ -30,6 +31,7 @@ export default function App() {
       </a>
 
       <Header />
+      <ScrollProgressRail />
       <main id="contenido" tabIndex={-1} className="focus:outline-none">
         {/* 001 — Hero + Skills */}
         <Hero />

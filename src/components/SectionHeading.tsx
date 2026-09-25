@@ -1,3 +1,5 @@
+import useLineReveal from '../hooks/useLineReveal'
+
 interface SectionHeadingProps {
   /** Número de sección, p. ej. "001" (se mostrará como "(001)") */
   index: string
@@ -11,17 +13,27 @@ interface SectionHeadingProps {
  * Cabecera editorial compartida por todas las secciones:
  * "(00X)" en gris a la izquierda + título grande en negro,
  * y un slot opcional a la derecha.
+ *
+ * Al entrar en el viewport, todo el bloque sube como una única línea
+ * recortada (ver `useLineReveal`), una sola vez.
  */
 export default function SectionHeading({ index, title, action }: SectionHeadingProps) {
+  const { wrapperRef, contentRef } = useLineReveal<HTMLDivElement>()
+
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4">
-      <div className="flex items-baseline gap-4">
-        <span className="font-archivo text-sm font-medium text-ink-soft">({index})</span>
-        <h2 className="font-display text-4xl uppercase leading-none text-ink sm:text-5xl md:text-6xl">
-          {title}
-        </h2>
+    <div ref={wrapperRef} className="overflow-hidden">
+      <div
+        ref={contentRef as React.RefObject<HTMLDivElement>}
+        className="flex flex-wrap items-end justify-between gap-4"
+      >
+        <div className="flex items-baseline gap-4">
+          <span className="font-archivo text-sm font-medium text-ink-soft">({index})</span>
+          <h2 className="font-display text-4xl uppercase leading-none text-ink sm:text-5xl md:text-6xl">
+            {title}
+          </h2>
+        </div>
+        {action}
       </div>
-      {action}
     </div>
   )
 }
