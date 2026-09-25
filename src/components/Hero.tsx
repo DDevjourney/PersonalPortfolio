@@ -1,70 +1,40 @@
-import { useEffect, useRef } from 'react'
-import { animate, stagger, utils } from 'animejs'
+import { useState } from 'react'
+import { useTypewriter, Cursor } from 'react-simple-typewriter'
 import useParallax from '../hooks/useParallax'
 
-/** Líneas del titular. Se parten en letras al montar. */
-const HERO_LINES = ['Desarrollador', 'Web', '<Builder />'] as const
+/**
+ * Líneas del titular, unidas por saltos de línea para el efecto typewriter.
+ * El espacio de `<Builder />` es un NBSP (` `): con `whitespace-pre-line`
+ * el navegador puede envolver esa línea por su espacio normal si no cabe
+ * (a diferencia del `whitespace-nowrap` por línea del diseño anterior).
+ */
+const HERO_LINES = ['Desarrollador', 'Web', '<Builder />'] as const
+const HERO_TEXT = HERO_LINES.join('\n')
+/** Índice a partir del cual el texto tipeado pertenece a la línea `<Builder />` (en gris). */
+const SOFT_LINE_START = HERO_TEXT.length - HERO_LINES[2].length
 
 /**
  * Hero a dos columnas: titular enorme a la izquierda y, a la derecha,
  * foto circular + presentación breve.
  *
- * El titular se compone letra a letra: cada línea es un contenedor con
- * un `clip-path` que solo recorta verticalmente (deja libre el eje X
- * para que "DESARROLLADOR" pueda desbordarse hacia la columna de la foto
- * como en el diseño original). Las letras arrancan desplazadas 105%
- * hacia abajo, fuera del recorte, y al montar suben en cascada con
- * `stagger` y easing outExpo (mismo perfil que Lenis). Al final del
- * recorrido enciende el caret parpadeante detrás de `<Builder />`.
+ * El titular se escribe con efecto máquina de escribir
+ * (react-simple-typewriter: hook `useTypewriter`, no manipula el DOM a
+ * mano como otras libs del estilo — evita el bug conocido de esas con
+ * `StrictMode`, que monta el efecto dos veces y rompe su instancia
+ * imperativa). Es una única "palabra" con saltos de línea (`\n` +
+ * `whitespace-pre-line`) en vez de tres líneas separadas, porque el hook
+ * está pensado para tipear/borrar palabras completas, no para mantener
+ * varias líneas visibles a la vez.
  */
 export default function Hero() {
-  const headlineRef = useRef<HTMLHeadingElement>(null)
-  const caretRef = useRef<HTMLSpanElement>(null)
+  const [prefersReducedMotion] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  // typeSpeed: 0 tipea de un tirón en vez de animar, para respetar la
+  // preferencia de menos movimiento sin tener que llamar al hook de forma
+  // condicional (los hooks no pueden saltarse entre renders).
+  const [text] = useTypewriter({ words: [HERO_TEXT], loop: 1, typeSpeed: prefersReducedMotion ? 0 : 45 })
   const parallaxOffset = useParallax()
-
-  useEffect(() => {
-    if (!headlineRef.current) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const letters = headlineRef.current.querySelectorAll<HTMLSpanElement>('[data-letter]')
-    const caret = caretRef.current
-
-    // Estado inicial explícito por si React tarda un frame en pintar: sin
-    // esto se ve un flash de las letras en su posición final antes de que
-    // arranque la animación.
-    utils.set(letters, { translateY: '105%' })
-    if (caret) utils.set(caret, { opacity: 0 })
-
-    // Duración base * stagger: 900ms * 27 letras a 28ms → ~1550ms total.
-    // El caret arranca ~300ms antes del final para que su primer flash
-    // coincida con la última letra aterrizando.
-    const STAGGER = 28
-    const DURATION = 900
-    const totalMs = DURATION + STAGGER * (letters.length - 1)
-
-    animate(letters, {
-      translateY: ['105%', '0%'],
-      duration: DURATION,
-      ease: 'out(4)',
-      delay: stagger(STAGGER),
-      // Fija el valor final en el style inline. anime v4 corre con WAAPI y
-      // sin este cierre el navegador podría volver al `translateY: '105%'`
-      // aplicado con `utils.set` de arriba al terminar la animación.
-      onComplete: () => utils.set(letters, { translateY: '0%' }),
-    })
-
-    if (caret) {
-      animate(caret, {
-        opacity: [0, 1],
-        duration: 240,
-        ease: 'linear',
-        delay: Math.max(0, totalMs - 300),
-        // Al terminar el fade in, deja el parpadeo a cargo de una
-        // animación CSS ligera para no mantener anime.js vivo eternamente.
-        onComplete: () => caret.classList.add('caret-blink'),
-      })
-    }
-  }, [])
 
   return (
     <section id="inicio" className="pt-28 md:pt-36">
@@ -72,55 +42,21 @@ export default function Hero() {
         <div className="flex flex-col gap-12 lg:flex-row lg:gap-10">
           {/* Columna izquierda (~60%): titular */}
           <div className="lg:w-3/5">
-            <h1
-              ref={headlineRef}
-              className="font-display text-5xl uppercase leading-[0.95] text-ink sm:text-7xl md:text-8xl lg:text-[7rem]"
-            >
-              {HERO_LINES.map((line, lineIndex) => {
-                const isBuilderLine = lineIndex === HERO_LINES.length - 1
-                return (
-                  // pb-[0.04em] deja un cuarto de píxel bajo el baseline
-                  // para que el `clip-path` no siegue el trazo diagonal
-                  // de glifos como `/` o `>` en Anton.
-                  <span
-                    key={line}
-                    // `whitespace-nowrap`: al partir la línea en spans
-                    // `inline-block`, cada letra se vuelve un ítem
-                    // envolvible y el navegador rompe la palabra a la
-                    // mitad ("DESARROLLA/DOR"). Con nowrap se preserva
-                    // como una unidad tipográfica.
-                    //
-                    // clip-path recorta solo el eje Y (para que las
-                    // letras aparezcan subiendo desde el baseline) y
-                    // deja el X libre. `overflow-hidden` cortaría los
-                    // dos ejes a la vez y "DESARROLLADOR" perdería la
-                    // cola que sale de su columna (era intencional en
-                    // el diseño original).
-                    className={`block whitespace-nowrap pb-[0.04em] [clip-path:inset(0_-100vw_0_-100vw)] ${
-                      isBuilderLine ? 'text-ink-soft' : ''
-                    }`}
-                  >
-                    {Array.from(line).map((char, i) => (
-                      <span
-                        // La `key` incluye la línea porque letras repetidas
-                        // (varias `r` en "Desarrollador") comparten char.
-                        key={`${lineIndex}-${i}`}
-                        data-letter
-                        className="inline-block will-change-transform"
-                      >
-                        {char === ' ' ? ' ' : char}
-                      </span>
-                    ))}
-                    {isBuilderLine && (
-                      <span
-                        ref={caretRef}
-                        aria-hidden
-                        className="ml-[0.08em] inline-block h-[0.75em] w-[0.5ch] translate-y-[-0.05em] bg-current align-middle"
-                      />
-                    )}
+            <h1 className="font-display whitespace-pre-line text-5xl uppercase leading-[0.95] text-ink sm:text-7xl md:text-8xl lg:text-[7rem]">
+              {text.length <= SOFT_LINE_START ? (
+                <>
+                  {text}
+                  <Cursor cursorStyle="▌" cursorColor="#1A1A1A" cursorBlinking={!prefersReducedMotion} />
+                </>
+              ) : (
+                <>
+                  {text.slice(0, SOFT_LINE_START)}
+                  <span className="text-ink-soft">
+                    {text.slice(SOFT_LINE_START)}
+                    <Cursor cursorStyle="▌" cursorColor="#65625C" cursorBlinking={!prefersReducedMotion} />
                   </span>
-                )
-              })}
+                </>
+              )}
             </h1>
           </div>
 
