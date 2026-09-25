@@ -2,12 +2,11 @@ import useActiveSection from '../hooks/useActiveSection'
 import { SECTIONS } from '../data/sections'
 
 /**
- * Indicador fijo "01 · 06" en la esquina inferior izquierda. Centrado
- * exactamente sobre la línea de `ScrollProgressRail` (mismo `left`,
- * `-translate-x-1/2`): la propia línea actúa de divisor, con el número
- * actual a su izquierda y el total a su derecha. Oculto en móvil por la
- * misma razón que el raíl: a 24px de margen no hay hueco para un elemento
- * fijo adicional.
+ * Indicador fijo del número de sección actual, justo a la izquierda de la
+ * línea de `ScrollProgressRail` (mismo `left`, desplazado con `translate-x`
+ * su propio ancho + un hueco de 1rem). Oculto en móvil por la misma razón
+ * que el raíl: a 24px de margen no hay hueco para un elemento fijo
+ * adicional.
  */
 export default function SectionIndexBadge() {
   const activeId = useActiveSection(SECTIONS)
@@ -16,10 +15,9 @@ export default function SectionIndexBadge() {
   return (
     <div
       aria-hidden
-      className="fixed bottom-6 left-6 z-40 hidden -translate-x-1/2 items-center gap-4 font-archivo text-xs tracking-wider text-ink-soft md:left-10 md:bottom-10 md:flex lg:left-16"
+      className="fixed bottom-6 left-6 z-40 hidden -translate-x-[calc(100%+1rem)] font-archivo text-xs tracking-wider text-ink-soft md:left-10 md:bottom-10 md:block lg:left-16"
     >
-      <span>{active.index.slice(-2)}</span>
-      <span>{SECTIONS.length.toString().padStart(2, '0')}</span>
+      {active.index.slice(-2)}
     </div>
   )
 }
