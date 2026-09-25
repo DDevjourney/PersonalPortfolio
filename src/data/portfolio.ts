@@ -26,11 +26,11 @@ export const projects: Project[] = [
   },
   { 
     id: '02',
-    title: 'Cannamatter',
+    title: 'AGRHound',
     stack: 'JavaScript, HTML, CSS',
     description:
-      'Landing page corporativa sobre productos derivados del cáñamo.',
-    url: 'https://observatorioagroalimentario.com/proyectos/GOS/cannamatter/',
+      'Landing page corporativa sobre aplicación de robótica en el campo.',
+    url: 'https://observatorioagroalimentario.com/proyectos/GOS/agrhound/',
   },
     {
     id: '03',
