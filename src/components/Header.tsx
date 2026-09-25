@@ -7,7 +7,6 @@ const navLinks = [
   // La etiqueta es la de la sección de destino: "Sobre mí" prometía otra cosa
   // y aterrizaba igualmente en el bloque titulado "Estudios".
   { label: 'Estudios', href: '#estudios' },
-  { label: 'Servicios', href: '#servicios' },
 ]
 
 /**

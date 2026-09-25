@@ -3,7 +3,7 @@ import { projects } from '../data/portfolio'
 
 /**
  * Sección Proyectos: filas tipo "carta" con número, título + stack y
- * descripción, en línea con el estilo de la sección Servicios.
+ * descripción.
  * Cada proyecto puede tener su propio enlace (`url`); si lo tiene, la
  * tarjeta es clicable y abre el enlace en una pestaña nueva.
  */

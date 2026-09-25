@@ -6,14 +6,13 @@ import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Education from './components/Education'
-import Services from './components/Services'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import useSmoothScroll from './hooks/useSmoothScroll'
 
 /**
  * Estructura general de la landing.
- * El orden de secciones sigue la numeración (001 → 006).
+ * El orden de secciones sigue la numeración (001 → 005).
  */
 export default function App() {
   useSmoothScroll()
@@ -44,9 +43,7 @@ export default function App() {
         <Experience />
         {/* 004 — Estudios */}
         <Education />
-        {/* 005 — Servicios */}
-        <Services />
-        {/* 006 — Contacto */}
+        {/* 005 — Contacto */}
         <Contact />
       </main>
       <Footer />

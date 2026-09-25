@@ -153,7 +153,7 @@ export default function Contact() {
   return (
     <section id="contacto" className="py-20 md:py-28">
       <div className="container-content">
-        <SectionHeading index="006" title="Contacto" />
+        <SectionHeading index="005" title="Contacto" />
 
         <form onSubmit={handleSubmit} noValidate className="mt-12 max-w-2xl">
           {/* Honeypot. Fuera de pantalla en lugar de `hidden` o `sr-only`: con

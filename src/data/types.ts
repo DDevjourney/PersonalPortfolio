@@ -26,15 +26,6 @@ export interface Project {
   url?: string
 }
 
-export interface Service {
-  /** Número index mostrado ("001", "002"...) */
-  id: string
-  /** Título del servicio en mayúsculas */
-  title: string
-  /** Descripción en gris a la derecha */
-  description: string
-}
-
 /**
  * Datos compartidos por las cartas expandibles de Experiencia y Estudios.
  * Ambas secciones reutilizan el mismo componente <ExpandableCards>.

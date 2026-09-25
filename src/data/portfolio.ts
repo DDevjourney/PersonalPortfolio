@@ -1,4 +1,4 @@
-import type { Skill, Project, Service, ExpandableItem } from './types'
+import type { Skill, Project, ExpandableItem } from './types'
 
 /* ------------------------------------------------------------------ */
 /* SKILLS — edita libremente esta lista                                */
@@ -50,30 +50,6 @@ export const projects: Project[] = [
 ]
 
 /* ------------------------------------------------------------------ */
-/* SERVICIOS                                                           */
-/* ------------------------------------------------------------------ */
-export const services: Service[] = [
-  {
-    id: '001',
-    title: 'DISEÑO WEB',
-    description:
-      'Sitios web rápidos y a medida, pensados para que tus clientes te encuentren y te contacten.',
-  },
-  {
-    id: '002',
-    title: 'DESARROLLO BACKEND',
-    description:
-      'Automatización de tu negocio: formularios que generan emails, paneles de gestión, exportar datos.',
-  },
-  {
-    id: '003',
-    title: 'DISEÑO UX/UI',
-    description:
-      'Diseño de interfaces y experiencia de usuario para que tus clientes naveguen cómodamente y encuentren lo que buscan.',
-  },
-]
-
-/* ------------------------------------------------------------------ */
 /* EXPERIENCIA — placeholder                                           */
 /* ------------------------------------------------------------------ */
 export const experience: ExpandableItem[] = [
@@ -89,7 +65,7 @@ export const experience: ExpandableItem[] = [
     id: 'exp-2',
     title: 'Decathlon',
     subtitle: 'Vendedor deportivo',
-    period: '2023 — 2026',
+    period: '2023 — 2025',
     description:
       'Lideré la iniciativa con una progresión del 47%, coordinando con colaboradores de cada sección, formando al personal y resolviendo incidencias operativas. Desarrollé soluciones digitales a nivel tienda y sección: centralicé herramientas en Google Sites y automaticé la gestión de reservas e inventario mediante Google Sheets.',
   },
