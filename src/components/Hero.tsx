@@ -175,15 +175,6 @@ export default function Hero() {
               Profesional del Desarrollo de Aplicaciones Web con base sólida en PHP, JavaScript, Laravel y React. Me gusta crear experiencias intuitivas y
               funcionales para usuarios y negocios.
             </p>
-
-            <a
-              href="#skills"
-              // py-2 no es estético: sube el alto del objetivo de 20px a 36px,
-              // por encima del mínimo de 24px de WCAG 2.5.8.
-              className="inline-flex w-fit items-center gap-2 py-2 text-sm font-bold text-ink transition-opacity duration-300 hover:opacity-60"
-            >
-              Desliza <span aria-hidden>↓</span>
-            </a>
           </div>
         </div>
       </div>
