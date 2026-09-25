@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { animate, stagger, utils } from 'animejs'
 import useParallax from '../hooks/useParallax'
-import { HexagonBackground } from './animate-ui/components/backgrounds/hexagon'
 
 /** Líneas del titular. Se parten en letras al montar. */
 const HERO_LINES = ['Desarrollador', 'Web', '<Builder />'] as const
@@ -68,16 +67,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <section id="inicio" className="relative overflow-hidden pt-28 md:pt-36">
-      {/* Textura de fondo: rejilla de hexágonos de Animate UI, recoloreada
-          a la paleta paper/ink del proyecto y sin el hover interactivo del
-          original (aquí es solo textura, no un elemento de producto). */}
-      <HexagonBackground
-        aria-hidden
-        hexagonSize={64}
-        hexagonMargin={2}
-        className="absolute inset-0 -z-10 bg-paper"
-      />
+    <section id="inicio" className="pt-28 md:pt-36">
       <div className="container-content">
         <div className="flex flex-col gap-12 lg:flex-row lg:gap-10">
           {/* Columna izquierda (~60%): titular */}
