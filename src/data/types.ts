@@ -24,10 +24,12 @@ export interface Project {
    * la tarjeta no es clicable.
    */
   url?: string
+  /** Captura del proyecto (import de Vite). Opcional: sin ella la tarjeta es solo texto. */
+  image?: string
 }
 
 /**
- * Datos compartidos por Experiencia (`MotionCarousel`) y Estudios
+ * Datos compartidos por Experiencia (`FlipCard`) y Estudios
  * (`EducationTimeline`).
  */
 export interface ExpandableItem {

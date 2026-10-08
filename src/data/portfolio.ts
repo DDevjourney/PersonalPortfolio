@@ -1,4 +1,8 @@
 import type { Skill, Project, ExpandableItem } from './types'
+import aLibraryImg from '../components/img/a-library.webp'
+import agrhoundImg from '../components/img/agrhound.webp'
+import greendropImg from '../components/img/greendrop.webp'
+import stremioImg from '../components/img/stremio.webp'
 
 /* ------------------------------------------------------------------ */
 /* SKILLS — edita libremente esta lista                                */
@@ -33,6 +37,7 @@ export const projects: Project[] = [
     description:
       'Herramienta para amantes de los libros: reseñas y listas.',
     url: 'https://a-library-s9bp.onrender.com/login',
+    image: aLibraryImg,
   },
   { 
     id: '02',
@@ -41,6 +46,7 @@ export const projects: Project[] = [
     description:
       'Landing page corporativa sobre aplicación de robótica en el campo.',
     url: 'https://observatorioagroalimentario.com/proyectos/GOS/agrhound/',
+    image: agrhoundImg,
   },
     {
     id: '03',
@@ -49,6 +55,7 @@ export const projects: Project[] = [
     description:
       'Landing page corporativa sobre un proyecto de sostenibilidad.',
     url: 'https://observatorioagroalimentario.com/proyectos/GOS/greendrop/',
+    image: greendropImg,
   },
      {id: '04',
     title: 'Stremio',
@@ -56,6 +63,7 @@ export const projects: Project[] = [
     description:
       'Landing page, centrada en la conversión, que promociona Stremio, creada como ejercicio de diseño front-end.',
     url: 'https://ddevjourney.github.io/stremio-pw/',
+    image: stremioImg,
   }
 ]
 

@@ -1,9 +1,18 @@
 import SectionHeading from './SectionHeading'
+import FolderFloat from './FolderFloat'
 import { skills } from '../data/portfolio'
 
+/** Categorías en el orden de primera aparición en `skills`, con sus tecnologías. */
+const categories = skills.reduce<{ label: string; items: string[] }[]>((acc, skill) => {
+  const group = acc.find((g) => g.label === skill.category)
+  if (group) group.items.push(skill.name)
+  else acc.push({ label: skill.category, items: [skill.name] })
+  return acc
+}, [])
+
 /**
- * Sección Skills: cabecera editorial + rejilla de tarjetas sobrias.
- * Cada tarjeta muestra el nombre en bold y su categoría en gris.
+ * Sección Skills: una carpeta (`FolderFloat`) por categoría. Al tocarla,
+ * suelta las tecnologías de esa categoría como notas flotantes.
  */
 export default function Skills() {
   return (
@@ -11,19 +20,26 @@ export default function Skills() {
       <div className="container-content">
         <SectionHeading index="001" title="Skills" />
 
-        <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink/15 bg-ink/15 sm:grid-cols-3 lg:grid-cols-6">
-          {skills.map((skill) => (
-            <div
-              key={skill.name}
-              className="group flex flex-col gap-1 bg-paper p-6 transition-colors duration-300 hover:bg-ink"
-            >
-              <span className="font-archivo text-xl font-bold text-ink transition-colors duration-300 group-hover:text-paper">
-                {skill.name}
-              </span>
-              <span className="text-xs uppercase tracking-wider text-ink-soft transition-colors duration-300 group-hover:text-paper/70">
-                {skill.category}
-              </span>
-            </div>
+        <div className="mt-20 flex flex-wrap justify-center gap-x-10 gap-y-24 md:mt-24">
+          {categories.map((category) => (
+            <FolderFloat
+              key={category.label}
+              label={category.label}
+              sublabel={`${category.items.length} ${category.items.length === 1 ? 'tecnología' : 'tecnologías'}`}
+              items={category.items}
+              trigger="click"
+              closeOnSelect={false}
+              width={160}
+              height={120}
+              spread={170}
+              lift={28}
+              folderColor="#1A1A1A"
+              frontColor="#1A1A1A"
+              paperColor="#E8E6E1"
+              itemColor="#EDEBE7"
+              itemTextColor="#1A1A1A"
+              labelColor="#E8E6E1"
+            />
           ))}
         </div>
       </div>

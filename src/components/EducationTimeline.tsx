@@ -22,8 +22,8 @@ interface EducationTimelineProps {
 }
 
 /**
- * Sección Estudios: timeline vertical, deliberadamente distinta del
- * carrusel de Experiencia (`MotionCarousel`). El raíl es una línea estática
+ * Sección Estudios: timeline vertical, deliberadamente distinta de las
+ * fichas giratorias de Experiencia (`FlipCard`). El raíl es una línea estática
  * (sin animación de scroll) que solo ocupa el tramo entre el primer y el
  * último nodo (`useNodeLineExtent`), y cada titulación entra con fade +
  * slide escalonado al llegar al viewport (`useStaggerReveal`), sin
