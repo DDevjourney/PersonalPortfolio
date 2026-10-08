@@ -27,7 +27,7 @@ Se eliminan `paper-light` e `ink-faint`. No hay degradados ni sombras difusas: l
 
 - **Jersey 10** (Google Fonts, un solo peso) para titulares, nombres de proyecto, años de la cronología, navegación y botones. Tamaños de la escala: 20 / 30 / 44 / 84 px (titular del Hero en escritorio; 56 px en móvil).
 - **Archivo** 400 y 600 para el texto corrido. Línea máxima de unos 70 caracteres (`max-w-[65ch]`); sin `text-justify`.
-- Se eliminan Anton e Inter. Jersey 10 se precarga con `<link rel="preload" as="font">` además del stylesheet, para que el titular no salte de fuente al entrar (fallo de la auditoría).
+- Se eliminan Anton e Inter. Para que el titular no salte de fuente al entrar (fallo de la auditoría), el montaje en píxeles del Hero espera a que Jersey 10 esté cargada (`document.fonts.load`, con un tope de 1,5 s). Es más fiable que un `preload`, porque Google Fonts no da una URL estable del archivo de fuente.
 - Sin etiquetas en mayúsculas espaciadas (`uppercase tracking-wider`) ni puntos medios como separador decorativo en texto visible.
 
 ### Forma
