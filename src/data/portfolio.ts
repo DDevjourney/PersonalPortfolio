@@ -3,6 +3,7 @@ import aLibraryImg from '../components/img/a-library.webp'
 import agrhoundImg from '../components/img/agrhound.webp'
 import greendropImg from '../components/img/greendrop.webp'
 import stremioImg from '../components/img/stremio.webp'
+import zombiesTrackerImg from '../components/img/zombies-tracker.webp'
 
 /* ------------------------------------------------------------------ */
 /* SKILLS — edita libremente esta lista                                */
@@ -64,7 +65,16 @@ export const projects: Project[] = [
       'Landing page, centrada en la conversión, que promociona Stremio, creada como ejercicio de diseño front-end.',
     url: 'https://ddevjourney.github.io/stremio-pw/',
     image: stremioImg,
-  }
+  },
+  {
+    id: '05',
+    title: 'Zombies Tracker',
+    stack: 'React + TypeScript + Supabase',
+    description:
+      'App web instalable (PWA) para registrar mis récords de rondas en los mapas de zombies de Black Ops 1 y 2, con ranking y estadísticas.',
+    url: 'https://github.com/DDevjourney/zombies-tracker',
+    image: zombiesTrackerImg,
+  },
 ]
 
 /* ------------------------------------------------------------------ */
