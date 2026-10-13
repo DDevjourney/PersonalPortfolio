@@ -28,12 +28,11 @@ export const skills: Skill[] = [
   // Backend
   { name: 'PHP', category: 'Backend' },
   { name: 'Node.js', category: 'Backend' },
-  { name: 'Express', category: 'Backend' },
+  { name: 'Laravel', category: 'Backend' },
   { name: 'API Rest', category: 'Backend' },
   // Bases de datos
   { name: 'SQL', category: 'Bases de datos' },
   { name: 'MySQL', category: 'Bases de datos' },
-  { name: 'MariaDB', category: 'Bases de datos' },
   // Diseño y plataformas
   { name: 'UX/UI', category: 'Diseño' },
   { name: 'Docker', category: 'Plataformas' },
