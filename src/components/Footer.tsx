@@ -1,6 +1,23 @@
 import { socials } from '../data/portfolio'
 
-/** Footer sencillo: logo, enlaces a redes y copyright. */
+/** Enlace dentro del colofón: en tinta y subrayado rojo al pasar el ratón. */
+function Credit({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium text-ink underline decoration-transparent underline-offset-4 transition-colors duration-300 hover:decoration-accent focus-visible:decoration-accent"
+    >
+      {children}
+    </a>
+  )
+}
+
+/**
+ * Footer: logo, enlaces a redes y copyright, y debajo un colofón con el
+ * stack con el que está hecha la web (al estilo del de brittanychiang.com).
+ */
 export default function Footer() {
   const year = new Date().getFullYear()
 
@@ -32,6 +49,24 @@ export default function Footer() {
         {/* Copyright */}
         <p className="text-xs text-ink-soft">
           © {year} Carlos. Todos los derechos reservados.
+        </p>
+      </div>
+
+      {/* Colofón */}
+      <div className="container-content mt-10">
+        <p className="max-w-xl text-sm leading-relaxed text-ink-soft">
+          Hecha con <Credit href="https://react.dev">React</Credit>,{' '}
+          <Credit href="https://www.typescriptlang.org">TypeScript</Credit> y{' '}
+          <Credit href="https://tailwindcss.com">Tailwind CSS</Credit> sobre{' '}
+          <Credit href="https://vite.dev">Vite</Credit>, con scroll suave de{' '}
+          <Credit href="https://lenis.darkroom.engineering">Lenis</Credit> y animaciones con{' '}
+          <Credit href="https://gsap.com">GSAP</Credit> y <Credit href="https://animejs.com">anime.js</Credit>, y
+          desplegada en <Credit href="https://pages.github.com">GitHub Pages</Credit>. El acordeón de Experiencia y
+          las fichas de Estudios son componentes de <Credit href="https://reactbits.dev">React Bits</Credit>, y la
+          rueda de navegación está inspirada en su Option Wheel. Los titulares usan{' '}
+          <Credit href="https://fonts.google.com/specimen/Anton">Anton</Credit>, el contenido{' '}
+          <Credit href="https://fonts.google.com/specimen/JetBrains+Mono">JetBrains Mono</Credit> y el texto{' '}
+          <Credit href="https://fonts.google.com/specimen/Inter">Inter</Credit>.
         </p>
       </div>
     </footer>

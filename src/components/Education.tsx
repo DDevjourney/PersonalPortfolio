@@ -81,14 +81,16 @@ export default function Education() {
         <SectionHeading index="004" title="Estudios" />
 
         <div role="group" aria-label="Titulación" className="mt-12 flex flex-wrap gap-3 md:mt-16">
+          {/* Seleccionado en rojo con texto en tinta: ~5:1. En color papel
+              daría 2.8:1, por debajo del mínimo para texto. */}
           {TRACKS.map((track, i) => (
             <button
               key={track.label}
               type="button"
               aria-pressed={i === selected}
               onClick={() => setSelected(i)}
-              className={`rounded-full border px-5 py-2 font-mono text-sm uppercase tracking-wider transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
-                i === selected ? 'border-ink bg-ink text-paper' : 'border-ink/30 text-ink hover:border-ink'
+              className={`rounded-full border px-5 py-2 font-mono text-sm uppercase tracking-wider transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
+                i === selected ? 'border-accent bg-accent text-ink' : 'border-ink/30 text-ink hover:border-ink'
               }`}
             >
               {track.label}
