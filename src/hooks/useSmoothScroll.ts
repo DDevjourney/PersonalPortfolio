@@ -4,6 +4,21 @@ import Lenis from 'lenis'
 /** Alto del header fijo (h-20 en desktop) para que los anclas no queden tapadas. */
 const HEADER_OFFSET = -80
 
+/** Instancia viva de Lenis (null si no arrancó por reduced-motion). */
+let lenisInstance: Lenis | null = null
+
+/**
+ * Desplaza a `#id` con la misma curva que los anclas. Para navegaciones que no
+ * nacen de un click en un `<a>` (p. ej. soltar un arrastre en la rueda lateral),
+ * donde la intercepción de `anchors` de Lenis no llega.
+ */
+export function scrollToSection(id: string) {
+  const target = document.getElementById(id)
+  if (!target) return
+  if (lenisInstance) lenisInstance.scrollTo(target, { offset: HEADER_OFFSET })
+  else target.scrollIntoView({ behavior: 'smooth' })
+}
+
 /**
  * Activa el scroll suave de Lenis durante toda la vida de la app.
  *
@@ -25,7 +40,11 @@ export default function useSmoothScroll() {
       autoRaf: true,
       anchors: { offset: HEADER_OFFSET },
     })
+    lenisInstance = lenis
 
-    return () => lenis.destroy()
+    return () => {
+      lenis.destroy()
+      lenisInstance = null
+    }
   }, [])
 }

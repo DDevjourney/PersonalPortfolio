@@ -40,6 +40,10 @@
     @apply bg-paper text-ink font-body antialiased;
   }
 
+  ::selection {
+    @apply bg-accent text-paper;
+  }
+
   /* Titulares grandes con fuente display */
   .font-display {
     letter-spacing: -0.01em;

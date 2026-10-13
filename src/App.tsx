@@ -1,6 +1,5 @@
 import Header from './components/Header'
-import ScrollProgressRail from './components/ScrollProgressRail'
-import SectionIndexBadge from './components/SectionIndexBadge'
+import SideNav from './components/SideNav'
 import Hero from './components/Hero'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
@@ -31,22 +30,25 @@ export default function App() {
       </a>
 
       <Header />
-      <ScrollProgressRail />
-      <SectionIndexBadge />
-      <main id="contenido" tabIndex={-1} className="focus:outline-none">
-        {/* 001 — Hero + Skills */}
-        <Hero />
-        <Skills />
-        {/* 002 — Proyectos */}
-        <Projects />
-        {/* 003 — Experiencia */}
-        <Experience />
-        {/* 004 — Estudios */}
-        <Education />
-        {/* 005 — Contacto */}
-        <Contact />
-      </main>
-      <Footer />
+      <SideNav />
+      {/* En lg+ la navegación es la rueda fija de la izquierda (w-72): el
+          contenido se desplaza ese ancho para no quedar debajo de ella. */}
+      <div className="lg:pl-72">
+        <main id="contenido" tabIndex={-1} className="focus:outline-none">
+          {/* 001 — Hero + Skills */}
+          <Hero />
+          <Skills />
+          {/* 002 — Proyectos */}
+          <Projects />
+          {/* 003 — Experiencia */}
+          <Experience />
+          {/* 004 — Estudios */}
+          <Education />
+          {/* 005 — Contacto */}
+          <Contact />
+        </main>
+        <Footer />
+      </div>
     </>
   )
 }

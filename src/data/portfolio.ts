@@ -6,6 +6,18 @@ import stremioImg from '../components/img/stremio.webp'
 import zombiesTrackerImg from '../components/img/zombies-tracker.webp'
 
 /* ------------------------------------------------------------------ */
+/* REDES — footer (todas) y hero (GitHub y LinkedIn)                   */
+/* ------------------------------------------------------------------ */
+export const socials = [
+  { label: 'GitHub', href: 'https://github.com/DDevjourney' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/cdsp/' },
+  { label: 'Email', href: 'mailto:carlosdsp2308@gmail.com' },
+]
+
+/** CV en PDF: el archivo va en `public/`, que Vite sirve tal cual desde la raíz. */
+export const CV_URL = '/cv-carlos.pdf'
+
+/* ------------------------------------------------------------------ */
 /* SKILLS — edita libremente esta lista                                */
 /* ------------------------------------------------------------------ */
 export const skills: Skill[] = [

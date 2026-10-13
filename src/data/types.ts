@@ -29,8 +29,8 @@ export interface Project {
 }
 
 /**
- * Datos compartidos por Experiencia (`FlipCard`) y Estudios
- * (`EducationTimeline`).
+ * Datos compartidos por Experiencia (`AccordionGallery`) y Estudios
+ * (panel de fichas de `Education`).
  */
 export interface ExpandableItem {
   /** Identificador único */

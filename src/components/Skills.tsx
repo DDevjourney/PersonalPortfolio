@@ -1,47 +1,52 @@
+import { useState } from 'react'
 import SectionHeading from './SectionHeading'
-import FolderFloat from './FolderFloat'
+import useStaggerReveal from '../hooks/useStaggerReveal'
 import { skills } from '../data/portfolio'
 
-/** Categorías en el orden de primera aparición en `skills`, con sus tecnologías. */
-const categories = skills.reduce<{ label: string; items: string[] }[]>((acc, skill) => {
-  const group = acc.find((g) => g.label === skill.category)
-  if (group) group.items.push(skill.name)
-  else acc.push({ label: skill.category, items: [skill.name] })
-  return acc
-}, [])
-
 /**
- * Sección Skills: una carpeta (`FolderFloat`) por categoría. Al tocarla,
- * suelta las tecnologías de esa categoría como notas flotantes.
+ * Sección Skills: muro tipográfico. Todas las tecnologías seguidas a tamaño
+ * póster en JetBrains Mono (los titulares van en Anton), separadas por "-",
+ * para que se lean de un vistazo sin interactuar. Al pasar por encima de una
+ * tecnología se apagan las de las demás categorías.
  */
 export default function Skills() {
+  const [hovered, setHovered] = useState<string | null>(null)
+  const wallRef = useStaggerReveal<HTMLUListElement>('[data-skill]')
+
   return (
     <section id="skills" className="py-20 md:py-28">
       <div className="container-content">
         <SectionHeading index="001" title="Skills" />
 
-        <div className="mt-20 flex flex-wrap justify-center gap-x-10 gap-y-24 md:mt-24">
-          {categories.map((category) => (
-            <FolderFloat
-              key={category.label}
-              label={category.label}
-              sublabel={`${category.items.length} ${category.items.length === 1 ? 'tecnología' : 'tecnologías'}`}
-              items={category.items}
-              trigger="click"
-              closeOnSelect={false}
-              width={160}
-              height={120}
-              spread={170}
-              lift={28}
-              folderColor="#1A1A1A"
-              frontColor="#1A1A1A"
-              paperColor="#E8E6E1"
-              itemColor="#EDEBE7"
-              itemTextColor="#1A1A1A"
-              labelColor="#E8E6E1"
-            />
-          ))}
-        </div>
+        <ul
+          ref={wallRef}
+          aria-label="Tecnologías"
+          onMouseLeave={() => setHovered(null)}
+          className="mt-16 font-mono text-[clamp(1.75rem,4.5vw,4rem)] font-extrabold lowercase leading-[1.1] tracking-tight md:mt-20"
+        >
+          {skills.map((skill, i) => {
+            const dimmed = hovered !== null && hovered !== skill.category
+            return (
+              <li
+                key={skill.name}
+                data-skill
+                onMouseEnter={() => setHovered(skill.category)}
+                className="inline-block whitespace-nowrap"
+              >
+                <span
+                  className={`transition-colors duration-300 ${dimmed ? 'text-ink-faint' : 'text-ink'}`}
+                >
+                  {skill.name}
+                </span>
+                {i < skills.length - 1 && (
+                  <span aria-hidden className="mx-[0.25em] text-accent">
+                    -
+                  </span>
+                )}
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </section>
   )

@@ -13,7 +13,8 @@ const navLinks = [
 
 /**
  * Header fijo: logo a la izquierda, navegación centrada y botón pill a la
- * derecha. En móvil la navegación colapsa en un menú hamburguesa.
+ * derecha. En móvil la navegación colapsa en un menú hamburguesa. En lg+ se
+ * oculta: la navegación pasa a la rueda lateral de `SideNav`.
  */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -34,11 +35,11 @@ export default function Header() {
   }, [menuOpen])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-paper/80 backdrop-blur-sm">
+    <header className="fixed inset-x-0 top-0 z-50 bg-paper/80 lg:hidden backdrop-blur-sm">
       <div className="container-content flex h-16 items-center justify-between md:h-20">
         {/* Logo */}
         <a href="#inicio" className="flex items-center gap-2 text-lg font-bold text-ink">
-          <span className="text-xl leading-none">/</span>
+          <span className="text-xl leading-none text-accent">/</span>
           <span>Carlos</span>
         </a>
 

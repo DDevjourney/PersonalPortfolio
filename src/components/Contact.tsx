@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import SectionHeading from './SectionHeading'
 
@@ -23,6 +23,105 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 /** id de la región de estado, referenciada por aria-describedby. */
 const ESTADO_ID = 'contacto-estado'
+
+interface FieldProps {
+  id: keyof FormState
+  label: string
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  disabled: boolean
+  invalid: boolean
+  fieldRef: (el: HTMLInputElement | HTMLTextAreaElement | null) => void
+  type?: string
+  autoComplete?: string
+  multiline?: boolean
+}
+
+/**
+ * Campo sin aspecto de campo: no hay caja, solo la palabra en grande (hace
+ * de placeholder) y una barra roja debajo. Al escribir, la palabra deja paso al
+ * texto en mono. Como el placeholder desaparece, mientras el campo tiene el
+ * foco la barra crece y muestra su nombre; eso hace además de indicador de
+ * foco. La etiqueta real va oculta para lectores de pantalla, que no siempre
+ * anuncian bien un placeholder.
+ */
+function Field({ id, label, value, onChange, disabled, invalid, fieldRef, type = 'text', autoComplete, multiline }: FieldProps) {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+
+  // El mensaje crece hacia abajo con el texto en vez de tener un alto fijo.
+  useLayoutEffect(() => {
+    const el = textareaRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${el.scrollHeight}px`
+  }, [value])
+
+  const fieldClass =
+    'relative block min-h-[2.75rem] w-full resize-none overflow-hidden border-0 bg-transparent p-0 font-mono text-lg text-ink caret-accent outline-none disabled:opacity-50'
+  const common = {
+    id,
+    name: id,
+    value,
+    onChange,
+    disabled,
+    autoComplete,
+    ...(invalid ? { 'aria-invalid': true, 'aria-describedby': ESTADO_ID } : {}),
+  }
+
+  return (
+    <div className="group relative">
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
+      {/* La palabra grande hace de placeholder y se desvanece en cuanto el
+          campo recibe el foco (su nombre pasa a la barra). No es el
+          `placeholder` nativo porque, al ser mucho más grande que el texto
+          del campo, el navegador la recortaba y la colocaba distinta en input
+          y textarea. */}
+      {!value && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute left-0 top-0 flex h-[2.75rem] items-center font-display text-3xl uppercase leading-none tracking-[0.03em] text-ink transition-opacity duration-300 group-focus-within:opacity-0 md:text-4xl"
+        >
+          {label}
+        </span>
+      )}
+      {multiline ? (
+        <textarea
+          {...common}
+          ref={(el) => {
+            textareaRef.current = el
+            fieldRef(el)
+          }}
+          rows={1}
+          className={`${fieldClass} py-[0.45rem] leading-relaxed`}
+        />
+      ) : (
+        <input
+          {...common}
+          ref={fieldRef}
+          type={type}
+          className={`${fieldClass} h-[2.75rem]`}
+        />
+      )}
+      {/* Si el campo falla, la barra pasa a tinta y deja su nombre a la vista. */}
+      <div
+        aria-hidden
+        className={`mt-2 flex h-2.5 items-center overflow-hidden transition-[height] duration-300 ease-expo group-focus-within:h-6 ${
+          invalid ? 'h-6 bg-ink' : 'bg-accent'
+        }`}
+      >
+        <span
+          className={`px-2 font-mono text-xs font-bold uppercase tracking-wider transition-opacity duration-300 group-focus-within:opacity-100 ${
+            invalid ? 'text-paper opacity-100' : 'text-ink opacity-0'
+          }`}
+        >
+          {label}
+        </span>
+      </div>
+    </div>
+  )
+}
 
 /**
  * Sección Contacto.
@@ -132,30 +231,14 @@ export default function Contact() {
     }
   }
 
-  // El foco no puede quedarse en el cambio de color de un borde de 1px: es
-  // demasiado sutil para WCAG 2.4.11, así que el indicador es un anillo.
-  // `focus-visible` (y no `focus`) para que salga al tabular pero no al hacer
-  // click con el ratón.
-  // Aquí había un `focus:border-ink` que era código muerto: comprobado en el
-  // navegador, nunca llegaba a aplicarse porque `border-ink/20` le gana la
-  // cascada (Tailwind emite la variante con opacidad después). Así que el
-  // único indicador de foco que quedaba era el del navegador... y
-  // `focus:outline-none` lo estaba quitando. De ahí el anillo.
-  const inputClass =
-    'w-full rounded-sm border-b border-ink/20 bg-transparent py-3 text-base text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-colors duration-300 disabled:opacity-50'
-
   const sending = status === 'sending'
-
-  /** Marca el campo como inválido y lo apunta al mensaje de estado. */
-  const a11y = (field: keyof FormState) =>
-    invalid[field] ? { 'aria-invalid': true, 'aria-describedby': ESTADO_ID } : {}
 
   return (
     <section id="contacto" className="py-20 md:py-28">
       <div className="container-content">
         <SectionHeading index="005" title="Contacto" />
 
-        <form onSubmit={handleSubmit} noValidate className="mt-12 max-w-2xl">
+        <form onSubmit={handleSubmit} noValidate className="mt-12 md:mt-16">
           {/* Honeypot. Fuera de pantalla en lugar de `hidden` o `sr-only`: con
               `hidden` muchos bots lo ignoran (que es justo lo que no queremos)
               y con `sr-only` sigue en el árbol de accesibilidad, así que un
@@ -173,84 +256,61 @@ export default function Contact() {
             className="absolute left-[-9999px] h-0 w-0 opacity-0"
           />
 
-          <div className="flex flex-col gap-8">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="nombre" className="text-xs uppercase tracking-wider text-ink-soft">
-                  Nombre
-                </label>
-                <input
-                  ref={(el) => { fieldRefs.current.nombre = el }}
-                  id="nombre"
-                  name="nombre"
-                  type="text"
-                  autoComplete="name"
-                  value={form.nombre}
-                  onChange={update('nombre')}
-                  disabled={sending}
-                  placeholder="Tu nombre"
-                  className={inputClass}
-                  {...a11y('nombre')}
-                />
-              </div>
+          <div className="grid grid-cols-1 items-start gap-x-8 gap-y-10 md:grid-cols-[1fr_1fr_1.5fr_auto]">
+            <Field
+              id="nombre"
+              label="Nombre"
+              autoComplete="name"
+              value={form.nombre}
+              onChange={update('nombre')}
+              disabled={sending}
+              invalid={Boolean(invalid.nombre)}
+              fieldRef={(el) => { fieldRefs.current.nombre = el }}
+            />
+            <Field
+              id="email"
+              label="Email"
+              type="email"
+              autoComplete="email"
+              value={form.email}
+              onChange={update('email')}
+              disabled={sending}
+              invalid={Boolean(invalid.email)}
+              fieldRef={(el) => { fieldRefs.current.email = el }}
+            />
+            <Field
+              id="mensaje"
+              label="Mensaje"
+              multiline
+              value={form.mensaje}
+              onChange={update('mensaje')}
+              disabled={sending}
+              invalid={Boolean(invalid.mensaje)}
+              fieldRef={(el) => { fieldRefs.current.mensaje = el }}
+            />
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="email" className="text-xs uppercase tracking-wider text-ink-soft">
-                  Email
-                </label>
-                <input
-                  ref={(el) => { fieldRefs.current.email = el }}
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  value={form.email}
-                  onChange={update('email')}
-                  disabled={sending}
-                  placeholder="tu@email.com"
-                  className={inputClass}
-                  {...a11y('email')}
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label htmlFor="mensaje" className="text-xs uppercase tracking-wider text-ink-soft">
-                Mensaje
-              </label>
-              <textarea
-                ref={(el) => { fieldRefs.current.mensaje = el }}
-                id="mensaje"
-                name="mensaje"
-                rows={4}
-                value={form.mensaje}
-                onChange={update('mensaje')}
-                disabled={sending}
-                placeholder="Escribe tu mensaje aquí"
-                className={`${inputClass} resize-none`}
-                {...a11y('mensaje')}
-              />
-            </div>
-
-            {/* Estado del envío: role="status" para que los lectores de
-                pantalla lo anuncien sin interrumpir lo que estén leyendo. */}
-            <p
-              id={ESTADO_ID}
-              role="status"
-              aria-live="polite"
-              className={`text-sm ${status === 'error' ? 'text-red-700' : 'text-ink'}`}
-            >
-              {message}
-            </p>
-
+            {/* Mismo alto que la línea de los campos para quedar alineado con
+                ellos aunque el mensaje crezca hacia abajo. */}
             <button
               type="submit"
               disabled={sending}
-              className="pill self-start disabled:opacity-50"
+              className="flex h-[2.75rem] items-center gap-2 justify-self-end whitespace-nowrap font-display text-3xl uppercase tracking-[0.03em] text-ink transition-opacity duration-300 hover:opacity-70 focus-visible:underline focus-visible:decoration-accent focus-visible:decoration-4 focus-visible:underline-offset-8 focus-visible:outline-none disabled:opacity-50 md:text-4xl"
             >
               {sending ? 'Enviando…' : 'Enviar'}
+              {!sending && <span aria-hidden className="text-accent">→</span>}
             </button>
           </div>
+
+          {/* Estado del envío: role="status" para que los lectores de
+              pantalla lo anuncien sin interrumpir lo que estén leyendo. */}
+          <p
+            id={ESTADO_ID}
+            role="status"
+            aria-live="polite"
+            className={`mt-8 font-mono text-sm ${status === 'error' ? 'text-red-700' : 'text-ink'}`}
+          >
+            {message}
+          </p>
         </form>
       </div>
     </section>

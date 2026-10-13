@@ -1,117 +1,127 @@
-import { useState } from 'react'
-import { useTypewriter, Cursor } from 'react-simple-typewriter'
-import useParallax from '../hooks/useParallax'
+import { useEffect, useRef } from 'react'
+import useMediaQuery from '../hooks/useMediaQuery'
+import { socials, CV_URL } from '../data/portfolio'
+
+/** Valor visible de un perfil: la parte de la URL tras el dominio. */
+const handle = (href: string) => new URL(href).pathname.replace(/\/$/, '').replace(/^\/(?!in\/)/, '')
 
 /**
- * Líneas del titular, unidas por saltos de línea para el efecto typewriter.
- * El espacio de `<Builder />` es un NBSP (` `): con `whitespace-pre-line`
- * el navegador puede envolver esa línea por su espacio normal si no cabe
- * (a diferencia del `whitespace-nowrap` por línea del diseño anterior).
+ * Filas de la ficha del hero: el CV y los perfiles profesionales (el email ya
+ * está en Contacto).
  */
-const HERO_LINES = ['Desarrollador', 'Web', '<Builder />'] as const
-const HERO_TEXT = HERO_LINES.join('\n')
-/** Índice a partir del cual el texto tipeado pertenece a la línea `<Builder />` (en gris). */
-const SOFT_LINE_START = HERO_TEXT.length - HERO_LINES[2].length
+const heroRows = [
+  { label: 'CV', value: 'descargar', href: CV_URL, download: true },
+  ...socials
+    .filter((social) => social.label !== 'Email')
+    .map((social) => ({ label: social.label, value: handle(social.href), href: social.href, download: false })),
+]
+
+/** Hueco que deja el final del titular respecto al borde derecho al terminar. */
+const END_MARGIN = 32
 
 /**
- * Hero a dos columnas: titular enorme a la izquierda y, a la derecha,
- * foto circular + presentación breve.
+ * Hero asimétrico: el titular, enorme y alineado a la izquierda, no cabe y se
+ * sale de la pantalla por la derecha. La sección es más alta que el viewport
+ * y su contenido va `sticky`: mientras se hace scroll por ella el titular se
+ * desplaza a la izquierda hasta verse entero, y luego la página sigue. Los
+ * datos y enlaces van pequeños, en mono, en la esquina inferior derecha.
  *
- * El titular se escribe con efecto máquina de escribir
- * (react-simple-typewriter: hook `useTypewriter`, no manipula el DOM a
- * mano como otras libs del estilo — evita el bug conocido de esas con
- * `StrictMode`, que monta el efecto dos veces y rompe su instancia
- * imperativa). Es una única "palabra" con saltos de línea (`\n` +
- * `whitespace-pre-line`) en vez de tres líneas separadas, porque el hook
- * está pensado para tipear/borrar palabras completas, no para mantener
- * varias líneas visibles a la vez.
+ * Con `prefers-reduced-motion` no hay desplazamiento: el titular se parte en
+ * líneas normales y la sección mide lo que su contenido.
  */
 export default function Hero() {
-  const [prefersReducedMotion] = useState(
-    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  )
-  // typeSpeed: 0 tipea de un tirón en vez de animar, para respetar la
-  // preferencia de menos movimiento sin tener que llamar al hook de forma
-  // condicional (los hooks no pueden saltarse entre renders).
-  const [text] = useTypewriter({ words: [HERO_TEXT], loop: 1, typeSpeed: prefersReducedMotion ? 0 : 45 })
-  const parallaxOffset = useParallax()
+  const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const sectionRef = useRef<HTMLElement>(null)
+  const titleRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (reducedMotion) return
+    let frame = 0
+    let x = 0
+
+    const update = () => {
+      frame = 0
+      const section = sectionRef.current
+      const title = titleRef.current
+      if (!section || !title) return
+      // Cuánto sobresale el titular por la derecha, sin la traslación actual.
+      const left = title.getBoundingClientRect().left - x
+      const overflow = Math.max(0, left + title.offsetWidth + END_MARGIN - window.innerWidth)
+      // Progreso dentro de la sección: 0 arriba, 1 al acabar el tramo sticky.
+      const rect = section.getBoundingClientRect()
+      const range = rect.height - window.innerHeight
+      const progress = range > 0 ? Math.min(1, Math.max(0, -rect.top / range)) : 0
+      x = -overflow * progress
+      title.style.transform = `translate3d(${x}px, 0, 0)`
+    }
+
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    return () => {
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [reducedMotion])
 
   return (
-    <section id="inicio" className="pt-28 md:pt-36">
-      <div className="container-content">
-        <div className="flex flex-col gap-12 lg:flex-row lg:gap-10">
-          {/* Columna izquierda (~60%): titular */}
-          <div className="lg:w-3/5">
-            <h1 className="font-display whitespace-pre-line text-5xl uppercase leading-[0.95] text-ink sm:text-7xl md:text-8xl lg:text-[7rem]">
-              {text.length <= SOFT_LINE_START ? (
-                <>
-                  {text}
-                  <Cursor cursorStyle="▌" cursorColor="#1A1A1A" cursorBlinking={!prefersReducedMotion} />
-                </>
-              ) : (
-                <>
-                  {text.slice(0, SOFT_LINE_START)}
-                  <span className="text-ink-soft">
-                    {text.slice(SOFT_LINE_START)}
-                    <Cursor cursorStyle="▌" cursorColor="#65625C" cursorBlinking={!prefersReducedMotion} />
+    // `overflow-x-clip` recorta el titular en el borde del viewport sin crear
+    // un contenedor de scroll, así que el `sticky` de dentro sigue funcionando.
+    <section
+      id="inicio"
+      ref={sectionRef}
+      className={`relative overflow-x-clip ${reducedMotion ? '' : 'h-[170vh]'}`}
+    >
+      <div
+        className={`container-content flex flex-col justify-end gap-10 pb-8 lg:justify-between pt-28 md:pb-10 lg:pt-16 ${
+          reducedMotion ? '' : 'sticky top-0 h-screen'
+        }`}
+      >
+        {/* Tamaño ligado al ancho disponible, para que "Desarrollador" llene
+            la línea, y topado por el alto para que las tres líneas quepan. */}
+        <h1 className="font-display text-[min(calc((100vw-3rem)/6.9),22vh)] uppercase leading-[0.86] tracking-[0.05em] text-ink md:text-[min(calc((100vw-5rem)/6.9),24vh)] lg:text-[min(calc((100vw-26rem)/6.9),155px,26vh)]">
+          <span
+            ref={titleRef}
+            className={`inline-block will-change-transform ${reducedMotion ? '' : 'whitespace-nowrap'}`}
+          >
+            Desarrollador
+            <br />
+            <span className="pl-[0.6em]">web que</span>
+            <br />
+            entiende el negocio<span className="text-accent">.</span>
+          </span>
+        </h1>
+
+        <div className="w-full max-w-xs self-end font-mono text-xs text-ink-soft md:text-sm">
+          <p className="text-right uppercase tracking-wider">
+            Carlos <span className="text-accent">/</span> React - Laravel
+          </p>
+          {/* Formato ficha: etiqueta, puntos de guía y valor. Cada fila entera
+              es el enlace, así el objetivo táctil es la línea completa. */}
+          <ul className="mt-3 space-y-1">
+            {heroRows.map((row) => (
+              <li key={row.label}>
+                <a
+                  href={row.href}
+                  {...(row.download
+                    ? { download: true }
+                    : { target: '_blank', rel: 'noopener noreferrer' })}
+                  className="group flex items-baseline gap-2 py-1 uppercase tracking-wider"
+                >
+                  <span>{row.label}</span>
+                  <span aria-hidden className="flex-1 translate-y-[-0.2em] border-b border-dotted border-ink/40" />
+                  <span className="normal-case tracking-normal text-ink underline decoration-transparent underline-offset-4 transition-colors duration-300 group-hover:decoration-accent group-focus-visible:decoration-accent">
+                    {row.value} <span aria-hidden>{row.download ? '↓' : '↗'}</span>
                   </span>
-                </>
-              )}
-            </h1>
-          </div>
-
-          {/* Columna derecha (~40%): foto + presentación */}
-          <div className="flex flex-col gap-6 lg:w-2/5">
-            {/* Foto circular de perfil */}
-            <div
-              className="flex justify-start lg:justify-center"
-              style={{ transform: `translateY(${parallaxOffset}px)` }}
-            >
-              {/* El recorte va en el contenedor, no en la <img>: la imagen es
-                  cuadrada igual que el hueco, así que con `object-cover` a
-                  secas se ve entera y encogerla no quita nada de pared, solo
-                  la hace más pequeña. El `scale` de dentro es lo que deja
-                  fuera del círculo la franja lateral: 1.3 recorta un 15% por
-                  cada lado. El origen va arriba y no centrado porque la cabeza
-                  empieza a ~10px del borde superior del archivo: centrado, el
-                  recorte vertical se la cortaba. Anclado arriba, esos 100px
-                  salen todos por abajo, que es camiseta.
-                  El aro marca el borde, que sobre el papel se difuminaba. */}
-              <div className="h-32 w-32 overflow-hidden rounded-full ring-1 ring-ink/15 md:h-40 md:w-40">
-                {/* width/height son los del archivo (432×432): le dan al
-                    navegador la proporción para reservar el hueco antes de
-                    descargarla. Es la imagen del primer viewport, de ahí la
-                    prioridad alta de descarga. */}
-                <img
-                  src="/perfil.jpg"
-                  alt="Carlos, desarrollador web"
-                  width={432}
-                  height={432}
-                  // En minúsculas y por spread a propósito. React 18 no conoce
-                  // la forma camelCase `fetchPriority` (llega en React 19): la
-                  // descartaba con un aviso en consola y el atributo no acababa
-                  // en el HTML, así que la prioridad de descarga no se aplicaba.
-                  // En minúsculas sí pasa tal cual al DOM, pero los tipos de
-                  // @types/react van por delante del runtime y solo aceptan la
-                  // versión camelCase, de ahí el spread para saltárselos.
-                  // Al subir a React 19: volver a `fetchPriority="high"`.
-                  {...{ fetchpriority: 'high' }}
-                  className="h-full w-full origin-top scale-[1.3] object-cover"
-                />
-              </div>
-            </div>
-
-            <p className="text-lg font-bold leading-snug text-ink">
-              Soy Carlos, desarrollador web y quiero construir tu identidad digital.
-            </p>
-
-            <hr className="hairline" />
-
-            <p className="text-sm leading-relaxed text-ink-soft">
-              Profesional del Desarrollo de Aplicaciones Web con base sólida en PHP, JavaScript, Laravel y React. Me gusta crear experiencias intuitivas y
-              funcionales para usuarios y negocios.
-            </p>
-          </div>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

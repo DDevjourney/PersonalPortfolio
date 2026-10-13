@@ -13,12 +13,19 @@ export default {
         // normal, que es el tamaño en el que se usa casi siempre.
         'ink-soft': '#65625C',
         'ink-faint': '#B7B3AC',
+        // Rojo de acento para resaltar detalles. Solo 2.8:1 sobre `paper`: no
+        // llega al 4.5:1 de WCAG AA para texto, así que se reserva para
+        // elementos decorativos o texto que ya se lee por otro canal.
+        accent: '#F54949',
       },
       fontFamily: {
         // Titulares geométricos / cuerpo
         display: ['Anton', 'Archivo', 'sans-serif'],
         archivo: ['Archivo', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
+        // Contenido dentro de cada sección (muro de skills, títulos de
+        // tarjetas), para que no compita con los titulares en Anton.
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       maxWidth: {
         content: '1200px',
