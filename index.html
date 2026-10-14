@@ -12,6 +12,23 @@
     />
     <!-- Color de la barra del navegador en móvil: el mismo papel del fondo -->
     <meta name="theme-color" content="#E8E6E1" />
+    <!-- Aplica el tema antes del primer pintado para que no haya un destello
+         claro al cargar en oscuro. Mismo criterio que `ThemeProvider`
+         (src/hooks/useTheme.tsx): si cambia uno, cambiar el otro. -->
+    <script>
+      (function () {
+        var theme
+        try {
+          theme = localStorage.getItem('theme')
+        } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        document.documentElement.dataset.theme = theme
+        var meta = document.querySelector('meta[name="theme-color"]')
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#242424' : '#E8E6E1')
+      })()
+    </script>
     <!-- El sitio responde en carlosdsp.es y www.carlosdsp.es. El canonical
          declara cuál de las dos indexar para que no cuenten como duplicado. -->
     <link rel="canonical" href="https://www.carlosdsp.es/" />
@@ -88,8 +105,8 @@
         }
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-75CqkSUs.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CCNfw7Av.css">
+    <script type="module" crossorigin src="/assets/index-CPVD2NTQ.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Q6X1KRcm.css">
   </head>
   <body>
     <div id="root"></div>
