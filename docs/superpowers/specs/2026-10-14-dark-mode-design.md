@@ -39,7 +39,7 @@ Experiencia (panel del acordeón) y Estudios (fichas de años) son hoy bloques o
 
 Como esos bloques ya son "`ink` de fondo, `paper` de texto", el cambio de tokens los invierte solos. Hay que migrar los hex fijos que los configuran:
 
-- `Experience.tsx`: `panelColor="#1A1A1A"` → `ink`, `textColor="#E8E6E1"` → `paper`, `accentColor="#F54949"` → `accent-on-ink`. El `text-accent` del subtítulo y la barra roja del panel pasan a `text-accent-on-ink` / `bg-accent-on-ink`.
+- `Experience.tsx`: `panelColor="#1A1A1A"` → `ink`, `textColor="#E8E6E1"` → `paper`, `accentColor="#F54949"` → `accent` (solo pinta el anillo de foco del panel, que se dibuja sobre el fondo de la página, no sobre el panel). El `text-accent` del subtítulo y la barra roja del panel, que sí van sobre el panel, pasan a `text-accent-on-ink` / `bg-accent-on-ink`.
 - `Education.tsx`: `tileColor="#1A1A1A"` → `ink`, `textColor="#E8E6E1"` → `paper`.
 - `SideNav.tsx`: `textColor="#B7B3AC"` → `ink-faint`, `activeColor="#1A1A1A"` → `ink`.
 
