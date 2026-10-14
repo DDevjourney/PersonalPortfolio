@@ -1,10 +1,7 @@
 import OptionWheel from './OptionWheel'
 import useActiveSection from '../hooks/useActiveSection'
 import { scrollToSection } from '../hooks/useSmoothScroll'
-import { SECTIONS } from '../data/sections'
-
-/** Items de la rueda: el hero ("Carlos") encima de las secciones numeradas. */
-const ITEMS = [{ id: 'inicio', title: 'Carlos' }, ...SECTIONS]
+import { NAV_ITEMS as ITEMS } from '../data/sections'
 const labels = ITEMS.map((item) => item.title)
 const hrefs = ITEMS.map((item) => `#${item.id}`)
 

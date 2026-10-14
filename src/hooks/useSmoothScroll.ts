@@ -20,6 +20,17 @@ export function scrollToSection(id: string) {
 }
 
 /**
+ * Bloquea o libera el scroll de la página (p. ej. con el menú móvil abierto).
+ * Hay que pararlo en Lenis además de en el CSS: Lenis captura la rueda y el
+ * gesto táctil por su cuenta y seguiría moviendo la página por debajo.
+ */
+export function setScrollLocked(locked: boolean) {
+  if (locked) lenisInstance?.stop()
+  else lenisInstance?.start()
+  document.documentElement.style.overflow = locked ? 'hidden' : ''
+}
+
+/**
  * Activa el scroll suave de Lenis durante toda la vida de la app.
  *
  * - `autoRaf` deja que Lenis gestione su propio requestAnimationFrame.
